@@ -20,8 +20,8 @@ CREATE TABLE IF NOT EXISTS skintype (
 CREATE TABLE IF NOT EXISTS products (
   id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(255) NOT NULL,
-  description VARCHAR(255),
-  photo_url VARCHAR(255),
+  description TEXT,
+  photo_url TEXT,
   brand_id INTEGER,
   category_id INTEGER,
   skintype_id INTEGER,

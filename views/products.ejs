@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Products</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <h1>Product Filters</h1>
+  
+  <form action="/products/filtered" method="GET">
+    <div class="filter-section">
+      <h3>Brands:</h3>
+      <% brands.forEach(brand => { %>
+        <label>
+          <input 
+            type="checkbox" 
+            name="brand" 
+            value="<%= brand.name %>" 
+            <%= filters && filters.brands && filters.brands.includes(brand.name) ? 'checked' : '' %>
+          />
+          <%= brand.name %>
+        </label>
+      <% }) %>
+    </div>
+
+    <div class="filter-section">
+      <h3>Categories:</h3>
+      <% categories.forEach(category => { %>
+        <label>
+          <input 
+            type="checkbox" 
+            name="category" 
+            value="<%= category.name %>" 
+            <%= filters && filters.categories && filters.categories.includes(category.name) ? 'checked' : '' %>
+          />
+          <%= category.name %>
+        </label>
+      <% }) %>
+    </div>
+
+    <div class="filter-section">
+      <h3>Skin Types:</h3>
+      <% skintypes.forEach(skintype => { %>
+        <label>
+          <input 
+            type="checkbox" 
+            name="skintype" 
+            value="<%= skintype.name %>" 
+            <%= filters && filters.skintypes && filters.skintypes.includes(skintype.name) ? 'checked' : '' %>
+          />
+          <%= skintype.name %>
+        </label>
+      <% }) %>
+    </div>
+
+    <button type="submit">Apply Filters</button>
+  </form>
+
+  <h2>Products</h2>
+  <% if (products.length === 0) { %>
+    <p>No products found matching your filters.</p>
+  <% } else { %>
+    <ul class="product-list">
+      <% products.forEach(product => { %>
+        <li class="product-item">
+          <h3><%= product.name %></h3>
+          <img src="<%= product.photo_url %>" alt="<%= product.name %>" />
+          <!-- <p>Brand: <%= product.brand_name %></p>
+          <p>Category: <%= product.category_name %></p>
+          <p>Skin Type: <%= product.skintype_name %></p>
+          <p>Price: $<%= product.price %></p> -->
+        </li>
+      <% }) %>
+    </ul>
+  <% } %>
+  <button>
+    <a href="/">Go Back</a>
+  </button>
+</body>
+</html>
