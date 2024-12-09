@@ -4,6 +4,6 @@ const router = Router();
 
 router.get("/", controller.indexPageGet);
 router.get("/products", controller.productsGet);
-router.get("/products/filtered", controller.filteredProductsGet);
+router.get("/products/:id", controller.productCardGet);
 
 module.exports = router;

@@ -1,6 +1,6 @@
 const pool = require("./pool");
 
-async function getAllProducts() {
+async function getProductByID(id) {
   const { rows } = await pool.query(`
     SELECT p.*,
       b.name AS brand_name,
@@ -9,14 +9,12 @@ async function getAllProducts() {
     FROM products p
     JOIN brand b ON p.brand_id = b.id
     JOIN category c ON p.category_id = c.id
-    JOIN skintype s ON p.skintype_id = s.id;
-  `);
+    JOIN skintype s ON p.skintype_id = s.id
+    WHERE p.id = $1;`,
+    [id]
+  );
 
-  return rows;
-}
-
-async function getProductByID(id) {
-  return await pool.query("SELECT * FROM products WHERE products.id = $1", [id]);
+  return rows[0];
 }
 
 async function getAllBrands() {
@@ -34,13 +32,11 @@ async function getAllSkintypes() {
   return rows;
 }
 
-async function getFilteredProducts(brands, categories, skintypes) {
-  // Create an array of parameters to pass to the query
+async function getProducts(brands, categories, skintypes) {
   const queryParams = [];
   const whereConditions = [];
   let paramCounter = 1;
 
-  // Build dynamic WHERE conditions based on non-empty arrays
   if (brands && brands.length > 0) {
     whereConditions.push(`b.name = ANY($${paramCounter})`);
     queryParams.push(brands);
@@ -59,12 +55,10 @@ async function getFilteredProducts(brands, categories, skintypes) {
     paramCounter++;
   }
 
-  // Construct the final WHERE clause
   const whereClause = whereConditions.length > 0 
     ? `WHERE ${whereConditions.join(' AND ')}` 
     : '';
 
-  // Execute the query
   const { rows } = await pool.query(`
     SELECT p.*,
       b.name AS brand_name,
@@ -82,10 +76,9 @@ async function getFilteredProducts(brands, categories, skintypes) {
 }
 
 module.exports = {
-  getAllProducts,
   getProductByID,
   getAllBrands,
   getAllCategories,
   getAllSkintypes,
-  getFilteredProducts
+  getProducts
 }

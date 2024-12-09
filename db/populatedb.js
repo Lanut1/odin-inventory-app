@@ -31,11 +31,7 @@ CREATE TABLE IF NOT EXISTS products (
 );
 
 INSERT INTO brand (name) VALUES
-  ('BIODERMA'),
-  ('LA ROCHE POSAY'),
-  ('AVENE'),
-  ('CERAVE'),
-  ('COSRX');
+  ('BIODERMA');
 
 INSERT INTO category (name) VALUES
   ('Face'),
@@ -61,17 +57,7 @@ INSERT INTO products (name, description, photo_url, brand_id, category_id, skint
   ('Cicabio Mains', 'The repairing balm with a second skin effect. Hands instant relief.', 'https://www.bioderma.us/sites/us/files/styles/large/public/2022-10/Cicabio-Mains-2022%20%282%29-min.png.webp?itok=X50R6UXp', 1, 5, 1),
   ('Sensibio Micellar cleansing oil', 'Ecobiological cleansing oil with micellar technology to cleanse and take care of the skin.', 'https://www.bioderma.us/sites/us/files/styles/large/public/products/%7B107154%7D_%7BBIO_SENSIBIO_MICELLAR_CLEANSING_OIL%7D_%7B28701A%7D.png.webp?itok=IXte_WgP', 1, 3, 1),
   ('Sébium Foaming Gel', 'The purifying gentle cleanser. Removes impurities, controls shine.', 'https://www.bioderma.us/sites/us/files/styles/large/public/products/%7B63370%7D_%7B%7D_%7B28664A%7D.png.webp?itok=6TVs_xXG', 1, 2, 4),
-  ('Atoderm Shower Oil', '24h hydration and immediate comfort right from the shower.', 'https://www.bioderma.us/sites/us/files/styles/large/public/products/Atoderm-Huile-de-douche-F1L-28138C-MAD-June24.png.webp?itok=EtHhzosw', 1, 2, 3),
-  ('Cicaplast Balm B5', 'Soothing Balm for Dry Skin Irritations', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw40d31888/img/3606000437449/la-roche-posay-cicaplast-soothing-balm-dry-skin-irritations-3606000437449-1.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 1, 3),
-  ('Toleriane Purifying Foaming Face Wash', 'Toleriane Purifying Foaming Facial Cleanser is a daily face wash for normal to oily, sensitive skin.', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw6eebc922/img/tolerianepurifyingfoamingfacialwash/LaRochePosay-Product-Toleriane-Toleriane-Purifying-foaming-cleanser-OLD-PACK-400ml-3337875545822-ATFPackshotFront-1500x1500.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 1, 4),
-  ('Lipikar AP+ Gentle Foaming Cleansing Oil', 'Moisturizing Body & Face Cleansing Oil For Dry To Extra Dry Skin', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw412fb49b/product/3337875853484/02_Lipikar-oil-400ml-front-shadow.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 3, 2),
-  ('Cicaplast Lips Hydration Restore Lip Balm', 'Lip Balm for Dry to Extra Dry Lips', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw261bae71/product/0000030106659/02_Cicaplast-Lips-front-shadow%20(1).jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 4, 2),
-  ('Toleriane Micellar Water', 'Micellar Water Cleanser for Sensitive Skin', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw3508f26e/img/micellarwaterultra/toleriane/Toleriane-Micellar-Water_400ml_Front_1500x1500.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 1, 1),
-  ('Respectissime Eye Makeup Remover', 'Gentle Waterproof Eye Makeup Remover', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw0a0deec2/img/3433422401907/la-roche-posay-respectissime-eye-makeup-remover-for-sensitive-skin-3433422401907-1.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 3, 1),
-  ('Effaclar Salicylic Acid Acne Routine Set', '3-step acne routine with salicylic acid', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw56824917/product/EffaclarSalicylicAcidAcneRoutineSet/01_Effaclar-set_1500x1500.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 1, 4),
-  ('Cicaplast Hand Cream for Dry Hands & Damaged Hands', 'Shea Butter Hand Cream for Dry Hands', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw143911ba/img/3337872414145/la-roche-posay-cicaplast-hand-cream-for-dry-hands-3337872414145-1.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 5, 3),
-  ('Lipikar AP+ Body Wash & AP+M Moisturizing Cream Set', 'Moisturizing Body Wash & Body Lotion Set for Dry Skin', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dwe1f39696/img/0_Bundles/la-roche-posay-lipikar-wash-and-lipikar-balm-set_1500x1500.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 2, 3),
-  ('Thermal Spring Water Face Mist', 'Soothing Face Mist for Sensitive Skin', 'https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw2fd3b293/img/thermalspringwater/la-roche-posay-thermal-spring-water-face-mist-facial-mist-face-spray-3433422404397-1.jpg?sw=578&sh=578&sm=cut&sfrm=jpg&q=70', 2, 1, 2);
+  ('Atoderm Shower Oil', '24h hydration and immediate comfort right from the shower.', 'https://www.bioderma.us/sites/us/files/styles/large/public/products/Atoderm-Huile-de-douche-F1L-28138C-MAD-June24.png.webp?itok=EtHhzosw', 1, 2, 3);
 `
 async function main() {
   console.log("seeding...");

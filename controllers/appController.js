@@ -4,23 +4,13 @@ function indexPageGet(req, res) {
   res.render("index");
 }
 
-async function productsGet(req, res) {
+async function productCardGet(req, res) {
   try {
-    const products = await db.getAllProducts();
-    const brands = await db.getAllBrands();
-    const categories = await db.getAllCategories();
-    const skintypes = await db.getAllSkintypes();
-
-    res.render("products", {
-      products,
-      brands,
-      categories,
-      skintypes,
-      filters: {}
-    });
-
+    const productID = parseInt(req.params.id);
+    const product = await db.getProductByID(productID);
+    res.render("productCard", {product});
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('Error fetching product info:', error);
     res.status(500).render('error', { 
       message: 'Unable to fetch products', 
       error: error.message
@@ -28,7 +18,7 @@ async function productsGet(req, res) {
   }
 }
 
-async function filteredProductsGet(req, res) {
+async function productsGet(req, res) {
   try {
     const filterBrands = req.query.brand ? 
       (Array.isArray(req.query.brand) ? req.query.brand : [req.query.brand]) 
@@ -44,7 +34,7 @@ async function filteredProductsGet(req, res) {
     const brands = await db.getAllBrands();
     const categories = await db.getAllCategories();
     const skintypes = await db.getAllSkintypes();
-    const products = await db.getFilteredProducts(filterBrands, filterCategories, filterSkintypes);
+    const products = await db.getProducts(filterBrands, filterCategories, filterSkintypes);
 
     res.render("products", {
       products,
@@ -59,7 +49,7 @@ async function filteredProductsGet(req, res) {
     });
     
   } catch (error) {
-    console.error('Error fetching products:', error);
+    console.error('Error fetching filtered products:', error);
     res.status(500).render('error', { 
       message: 'Unable to fetch products', 
       error: error.message
@@ -70,5 +60,5 @@ async function filteredProductsGet(req, res) {
 module.exports = {
   indexPageGet,
   productsGet,
-  filteredProductsGet
+  productCardGet
 }

@@ -3,13 +3,6 @@ const path = require("path");
 require('dotenv').config();
 const app = express();
 const appRouter = require("./routes/appRouter");
-const cors = require('cors');
-
-
-app.use(cors({
-  origin: '*', // Be more specific in production
-  methods: ['GET', 'POST']
-}));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
