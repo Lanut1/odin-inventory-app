@@ -12,7 +12,7 @@ async function productCardGet(req, res) {
   } catch (error) {
     console.error('Error fetching product info:', error);
     res.status(500).render('error', { 
-      message: 'Unable to fetch products', 
+      message: 'Unable to fetch product info', 
       error: error.message
     });
   }
@@ -48,7 +48,7 @@ async function productsGet(req, res) {
       }
     });
     
-  } catch (error) {
+  } catch (error) { 
     console.error('Error fetching filtered products:', error);
     res.status(500).render('error', { 
       message: 'Unable to fetch products', 
@@ -57,8 +57,72 @@ async function productsGet(req, res) {
   }
 }
 
+async function productFormGet(req, res) {
+  try {
+    const brands = await db.getAllBrands();
+    const categories = await db.getAllCategories();
+    const skintypes = await db.getAllSkintypes();
+
+    res.render("productForm", {brands, categories, skintypes});
+  } catch (error) {
+    console.error('Error opening new product form:', error);
+    res.status(500).render('error', { 
+      message: 'Unable to open product form', 
+      error: error.message
+    });
+  }
+
+}
+
+async function productsPost(req,res) {
+  try {
+    let { name, description, photo_url, brand, category, skintype } = req.body;
+
+    if (req.body.newBrandText) {
+      brand = req.body.newBrandText;
+      await db.addNewBrand(brand);
+    }
+
+    const brandID = await db.getBrandIDByName(brand);
+
+    if (req.body.newCategoryText) {
+      category = req.body.newCategoryText;
+      await db.addNewCategory(category);
+    }
+
+    const categoryID = await db.getCategoryIDByName(category);
+
+    if (req.body.newSkintypeText) {
+      skintype = req.body.newSkintypeText;
+      await db.addNewSkintype(skintype);
+    }
+
+    const skintypeID = await db.getSkintypeIDByName(skintype);
+
+    const newProduct = {
+      name,
+      description,
+      photo_url,
+      brand_id: brandID.id,
+      category_id: categoryID.id,
+      skintype_id: skintypeID.id
+    }
+
+    await db.addNewProduct(newProduct);
+    res.redirect("/products");
+  } catch (error) {
+    console.error('Error adding new product:', error);
+    res.status(500).render('error', { 
+      message: 'Unable to add new product', 
+      error: error.message
+    });
+  }
+}
+
 module.exports = {
   indexPageGet,
   productsGet,
-  productCardGet
+  productsPost,
+  productCardGet,
+  productFormGet
 }

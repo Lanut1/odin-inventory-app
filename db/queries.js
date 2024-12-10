@@ -17,9 +17,25 @@ async function getProductByID(id) {
   return rows[0];
 }
 
+async function addNewProduct(newProduct) {
+  await pool.query(`
+    INSERT INTO products (name, description, photo_url, brand_id, category_id, skintype_id) VALUES
+      ($1, $2, $3, $4, $5, $6);
+    `, [ newProduct.name, newProduct.description, newProduct.photo_url, newProduct.brand_id, newProduct.category_id, newProduct.skintype_id ]);
+}
+
 async function getAllBrands() {
   const { rows } = await pool.query("SELECT name FROM brand");
   return rows;
+}
+
+async function getBrandIDByName(name) {
+  const { rows } = await pool.query("SELECT id FROM brand WHERE brand.name = $1", [name]);
+  return rows[0];
+}
+
+async function addNewBrand(name) {
+  await pool.query("INSERT INTO brand (name) VALUES ($1)", [name]);
 }
 
 async function getAllCategories() {
@@ -27,9 +43,27 @@ async function getAllCategories() {
   return rows;
 }
 
+async function getCategoryIDByName(name) {
+  const { rows } = await pool.query("SELECT id FROM category WHERE category.name = $1", [name]);
+  return rows[0];
+}
+
+async function addNewCategory(name) {
+  await pool.query("INSERT INTO category (name) VALUES ($1)", [name]);
+}
+
 async function getAllSkintypes() {
   const { rows } = await pool.query("SELECT name FROM skintype");
   return rows;
+}
+
+async function getSkintypeIDByName(name) {
+  const { rows } = await pool.query("SELECT id FROM skintype WHERE skintype.name = $1", [name]);
+  return rows[0];
+}
+
+async function addNewSkintype(name) {
+  await pool.query("INSERT INTO skintype (name) VALUES ($1)", [name]);
 }
 
 async function getProducts(brands, categories, skintypes) {
@@ -77,8 +111,15 @@ async function getProducts(brands, categories, skintypes) {
 
 module.exports = {
   getProductByID,
+  addNewProduct,
   getAllBrands,
+  getBrandIDByName,
+  addNewBrand,
   getAllCategories,
+  getCategoryIDByName,
+  addNewCategory,
   getAllSkintypes,
+  getSkintypeIDByName,
+  addNewSkintype,
   getProducts
 }

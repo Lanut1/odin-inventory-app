@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Product</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <form action="/products" method="POST">
+    <label>
+      <input type="text" name="name" id="name" maxlength="255" required>
+      Product Name:
+    </label>
+
+    <label>
+      <input type="text" name="description" required>
+      Product Description:
+    </label>
+
+    <label>
+      <input type="text" name="photo_url" required>
+      Product Photo:
+    </label>
+
+    <fieldset>
+      <% brands.forEach(brand => { %>
+        <label>
+          <input type="radio" name="brand" value="<%= brand.name %>" onclick="toggleBrandInput()" required>
+          <%= brand.name %>
+        </label>
+      <% }) %>
+
+      <label>
+        <input type="radio" name="brand" value="new_brand" onclick="toggleBrandInput()">
+        Add New Brand
+      </label>
+
+      <label>
+        <input type="text" id="newBrandText" name="newBrandText" disabled required>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <% categories.forEach(category => { %>
+        <label>
+          <input type="radio" name="category" value="<%= category.name %>" onclick="toggleCategoryInput()" required>
+          <%= category.name %>
+        </label>
+      <% }) %>
+
+      <label>
+        <input type="radio" name="category" value="new_category" onclick="toggleCategoryInput()">
+        Add New Category
+      </label>
+
+      <label>
+        <input type="text" id="newCategoryText" name="newCategoryText" disabled required>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <% skintypes.forEach(skintype => { %>
+        <label>
+          <input type="radio" name="skintype" value="<%= skintype.name %>" onclick="toggleSkintypeInput()" required>
+          <%= skintype.name %>
+        </label>
+      <% }) %>
+
+      <label>
+        <input type="radio" name="skintype" value="new_skintype" onclick="toggleSkintypeInput()">
+        Add New Skintype
+      </label>
+
+      <label>
+        <input type="text" id="newSkintypeText" name="newSkintypeText" disabled required>
+      </label>
+    </fieldset>
+
+    <button type="submit">Add Product</button>
+    <button><a href="/products">Go Back</a></button>
+  </form>
+
+  <script>
+    function toggleBrandInput() {
+      const newBrandRadio = document.querySelector("input[value='new_brand']");
+      const newBrandText = document.getElementById("newBrandText");
+
+      if (newBrandRadio.checked) {
+        newBrandText.disabled = false;
+      } else {
+        newBrandText.disabled = true;
+        newBrandText.value = '';
+      }
+    }
+
+    function toggleCategoryInput() {
+      const newCategoryRadio = document.querySelector("input[value='new_category']");
+      const newCategoryText = document.getElementById("newCategoryText");
+
+      if (newCategoryRadio.checked) {
+        newCategoryText.disabled = false;
+      } else {
+        newCategoryText.disabled = true;
+        newCategoryText.value = '';
+      }
+    }
+
+    function toggleSkintypeInput() {
+      const newSkintypeRadio = document.querySelector("input[value='new_skintype']");
+      const newSkintypeText = document.getElementById("newSkintypeText");
+
+      if (newSkintypeRadio.checked) {
+        newSkintypeText.disabled = false;
+      } else {
+        newSkintypeText.disabled = true;
+        newSkintypeText.value = '';
+      }
+    }
+  </script>
+
+</body>
+</html>
