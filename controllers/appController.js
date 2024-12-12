@@ -18,6 +18,20 @@ async function productCardGet(req, res) {
   }
 }
 
+async function productCardDelete(req, res) {
+  try { 
+    const productID = req.params.id;
+    await db.deleteProduct(productID);
+    res.redirect("/products");
+  } catch (error) {
+    console.error('Error deleting product card:', error);
+    res.status(500).render('error', { 
+      message: 'Unable to delete product', 
+      error: error.message
+    });
+  }
+}
+
 async function productsGet(req, res) {
   try {
     const filterBrands = req.query.brand ? 
@@ -124,5 +138,6 @@ module.exports = {
   productsGet,
   productsPost,
   productCardGet,
+  productCardDelete,
   productFormGet
 }

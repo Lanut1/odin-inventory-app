@@ -1,7 +1,10 @@
 const express = require("express");
 const path = require("path");
 require('dotenv').config();
+const methodOverride = require('method-override');
+
 const app = express();
+app.use(methodOverride('_method'));
 const appRouter = require("./routes/appRouter");
 
 app.set("view engine", "ejs");

@@ -7,6 +7,16 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+  <dialog id="confirmDelete">
+    <form  id="deleteForm" action="/products/<%= product.id %>?_method=DELETE" method="POST">
+      <h3>Do you want to delete this product?</h3>
+      <input type="hidden" name="_method" value="DELETE">
+      <button type="button" onclick="cancelDelete()">Cancel</button>
+      <button type="submit">Delete</button>
+    </form>
+
+  </dialog>
+
   <h3><%= product.name %></h3>
   <img src="<%= product.photo_url %>" alt="<%= product.name %>" />
   <p>Brand: <%= product.brand_name %></p>
@@ -19,11 +29,24 @@
   </button>
 
   <button>
-    <a href=""></a>
+    <a href="">Update</a>
   </button>
 
-  <button>
-    <a href=""></a>
+  <button onclick="confirmDelete()">
+    Delete
   </button>
+
+  <script>
+    const dialog = document.getElementById("confirmDelete");    
+
+    function confirmDelete() {
+      dialog.showModal();
+    }
+
+    function cancelDelete() {
+      dialog.close();
+    }
+
+  </script>
 </body>
 </html>

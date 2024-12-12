@@ -24,6 +24,10 @@ async function addNewProduct(newProduct) {
     `, [ newProduct.name, newProduct.description, newProduct.photo_url, newProduct.brand_id, newProduct.category_id, newProduct.skintype_id ]);
 }
 
+async function deleteProduct(id) {
+  await pool.query("DELETE FROM products WHERE products.id = $1", [id]);
+}
+
 async function getAllBrands() {
   const { rows } = await pool.query("SELECT name FROM brand");
   return rows;
@@ -112,6 +116,7 @@ async function getProducts(brands, categories, skintypes) {
 module.exports = {
   getProductByID,
   addNewProduct,
+  deleteProduct,
   getAllBrands,
   getBrandIDByName,
   addNewBrand,
