@@ -18,9 +18,22 @@ async function productCardGet(req, res) {
   }
 }
 
+// async function productCardPut(req, res) {
+//   try {
+//     const productID = parseInt(req.params.id);
+
+//   } catch (error) {
+//     console.error('Error updating product card:', error);
+//     res.status(500).render('error', { 
+//       message: 'Unable to update product', 
+//       error: error.message
+//     });
+//   }
+// }
+
 async function productCardDelete(req, res) {
   try { 
-    const productID = req.params.id;
+    const productID = parseInt(req.params.id);
     await db.deleteProduct(productID);
     res.redirect("/products");
   } catch (error) {
@@ -76,8 +89,13 @@ async function productFormGet(req, res) {
     const brands = await db.getAllBrands();
     const categories = await db.getAllCategories();
     const skintypes = await db.getAllSkintypes();
+    let product = null;
 
-    res.render("productForm", {brands, categories, skintypes});
+    if (req.params.id) {
+      product = await db.getProductByID(req.params.id);
+    }
+
+    res.render("productForm", {brands, categories, skintypes, product});
   } catch (error) {
     console.error('Error opening new product form:', error);
     res.status(500).render('error', { 
@@ -85,7 +103,6 @@ async function productFormGet(req, res) {
       error: error.message
     });
   }
-
 }
 
 async function productsPost(req,res) {
@@ -98,7 +115,7 @@ async function productsPost(req,res) {
     }
 
     const brandID = await db.getBrandIDByName(brand);
-
+ 
     if (req.body.newCategoryText) {
       category = req.body.newCategoryText;
       await db.addNewCategory(category);
@@ -112,7 +129,7 @@ async function productsPost(req,res) {
     }
 
     const skintypeID = await db.getSkintypeIDByName(skintype);
-
+ 
     const newProduct = {
       name,
       description,
@@ -122,7 +139,12 @@ async function productsPost(req,res) {
       skintype_id: skintypeID.id
     }
 
-    await db.addNewProduct(newProduct);
+    if (req.method === "PUT" && req.params.id) {
+      await db.updateProduct(req.params.id, newProduct);
+    } else {
+      await db.addNewProduct(newProduct);
+    }   
+    
     res.redirect("/products");
   } catch (error) {
     console.error('Error adding new product:', error);
@@ -131,7 +153,7 @@ async function productsPost(req,res) {
       error: error.message
     });
   }
-}
+}  
 
 module.exports = {
   indexPageGet,

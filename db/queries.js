@@ -24,6 +24,21 @@ async function addNewProduct(newProduct) {
     `, [ newProduct.name, newProduct.description, newProduct.photo_url, newProduct.brand_id, newProduct.category_id, newProduct.skintype_id ]);
 }
 
+async function updateProduct(id, newProduct) {
+  await pool.query(`
+    UPDATE products
+    SET
+      name = $1,
+      description = $2,
+      photo_url = $3,
+      brand_id = $4,
+      category_id = $5,
+      skintype_id = $6
+    WHERE id = $7
+    `, [ newProduct.name, newProduct.description, newProduct.photo_url, newProduct.brand_id, newProduct.category_id, newProduct.skintype_id, id]);
+  
+}
+
 async function deleteProduct(id) {
   await pool.query("DELETE FROM products WHERE products.id = $1", [id]);
 }
@@ -116,6 +131,7 @@ async function getProducts(brands, categories, skintypes) {
 module.exports = {
   getProductByID,
   addNewProduct,
+  updateProduct,
   deleteProduct,
   getAllBrands,
   getBrandIDByName,

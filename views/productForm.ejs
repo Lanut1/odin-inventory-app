@@ -7,26 +7,30 @@
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-  <form action="/products" method="POST">
+  <form action="/products<%= product ? '/' + product.id + '?_method=PUT' : '' %>" method="POST">
+    <% if (product) { %>
+      <input type="hidden" name="_method" value="PUT">
+    <% }%>
+
     <label>
-      <input type="text" name="name" id="name" maxlength="255" required>
+      <input type="text" name="name" id="name" value="<%= product ? product.name : '' %>" maxlength="255" required>
       Product Name:
     </label>
 
     <label>
-      <input type="text" name="description" required>
+      <input type="text" name="description" value="<%= product ? product.description : '' %>" required>
       Product Description:
     </label>
 
     <label>
-      <input type="text" name="photo_url" required>
+      <input type="text" name="photo_url" value="<%= product ? product.photo_url : '' %>" required>
       Product Photo:
     </label>
 
     <fieldset>
       <% brands.forEach(brand => { %>
         <label>
-          <input type="radio" name="brand" value="<%= brand.name %>" onclick="toggleBrandInput()" required>
+          <input type="radio" name="brand" value="<%= brand.name %>" onclick="toggleBrandInput()" <%= product && product.brand_name === brand.name ? 'checked' : '' %> required>
           <%= brand.name %>
         </label>
       <% }) %>
@@ -44,7 +48,7 @@
     <fieldset>
       <% categories.forEach(category => { %>
         <label>
-          <input type="radio" name="category" value="<%= category.name %>" onclick="toggleCategoryInput()" required>
+          <input type="radio" name="category" value="<%= category.name %>" onclick="toggleCategoryInput()" <%= product && product.category_name === category.name ? 'checked' : '' %> required>
           <%= category.name %>
         </label>
       <% }) %>
@@ -62,7 +66,7 @@
     <fieldset>
       <% skintypes.forEach(skintype => { %>
         <label>
-          <input type="radio" name="skintype" value="<%= skintype.name %>" onclick="toggleSkintypeInput()" required>
+          <input type="radio" name="skintype" value="<%= skintype.name %>" onclick="toggleSkintypeInput()" <%= product && product.skintype_name === skintype.name ? 'checked' : '' %> required>
           <%= skintype.name %>
         </label>
       <% }) %>
@@ -77,8 +81,12 @@
       </label>
     </fieldset>
 
-    <button type="submit">Add Product</button>
-    <button><a href="/products">Go Back</a></button>
+    <button type="submit">
+      <%= product ? 'Update product' : 'Add Product' %>
+    </button>
+    <button type="button">
+      <a href="/products">Go Back</a>
+    </button>
   </form>
 
   <script>
