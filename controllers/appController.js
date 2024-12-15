@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+require('dotenv').config();
 
 function indexPageGet(req, res) {
   res.render("index");
@@ -18,21 +19,12 @@ async function productCardGet(req, res) {
   }
 }
 
-// async function productCardPut(req, res) {
-//   try {
-//     const productID = parseInt(req.params.id);
-
-//   } catch (error) {
-//     console.error('Error updating product card:', error);
-//     res.status(500).render('error', { 
-//       message: 'Unable to update product', 
-//       error: error.message
-//     });
-//   }
-// }
-
 async function productCardDelete(req, res) {
-  try { 
+  try {
+    const { password } = req.body;
+
+    if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
+    
     const productID = parseInt(req.params.id);
     await db.deleteProduct(productID);
     res.redirect("/products");
@@ -107,7 +99,9 @@ async function productFormGet(req, res) {
 
 async function productsPost(req,res) {
   try {
-    let { name, description, photo_url, brand, category, skintype } = req.body;
+    let { password, name, description, photo_url, brand, category, skintype } = req.body;
+
+    if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
 
     if (req.body.newBrandText) {
       brand = req.body.newBrandText;

@@ -8,6 +8,11 @@
 </head>
 <body>
   <form action="/products<%= product ? '/' + product.id + '?_method=PUT' : '' %>" method="POST">
+    <label>
+      <input type="password" name="password" required>
+      Please Enter Admin Password:
+    </label>
+    
     <% if (product) { %>
       <input type="hidden" name="_method" value="PUT">
     <% }%>
