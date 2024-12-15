@@ -17,6 +17,12 @@
       <input type="hidden" name="_method" value="PUT">
     <% }%>
 
+    <% if (errors) { %>
+      <% errors.forEach(error => { %>
+        <div><%= error.msg %></div>
+      <% })%>
+    <% } %>
+
     <label>
       <input type="text" name="name" id="name" value="<%= product ? product.name : '' %>" maxlength="255" required>
       Product Name:
@@ -35,54 +41,54 @@
     <fieldset>
       <% brands.forEach(brand => { %>
         <label>
-          <input type="radio" name="brand" value="<%= brand.name %>" onclick="toggleBrandInput()" <%= product && product.brand_name === brand.name ? 'checked' : '' %> required>
+          <input type="radio" name="brand_name" value="<%= brand.name %>" onclick="toggleBrandInput()" <%= product && product.brand_name === brand.name ? 'checked' : '' %> required>
           <%= brand.name %>
         </label>
       <% }) %>
 
       <label>
-        <input type="radio" name="brand" value="new_brand" onclick="toggleBrandInput()">
+        <input type="radio" name="brand_name" value="new_brand" <%= product && product.brand_name === "new_brand" ? 'checked' : '' %> onclick="toggleBrandInput()">
         Add New Brand
       </label>
 
       <label>
-        <input type="text" id="newBrandText" name="newBrandText" disabled required>
+        <input type="text" id="newBrandText" name="newBrandText" value="<%= product && product.newBrandText ? product.newBrandText : '' %>" <%= product && product.brand_name === "new_brand" ? '' : 'disabled' %> required>
       </label>
     </fieldset>
 
     <fieldset>
       <% categories.forEach(category => { %>
         <label>
-          <input type="radio" name="category" value="<%= category.name %>" onclick="toggleCategoryInput()" <%= product && product.category_name === category.name ? 'checked' : '' %> required>
+          <input type="radio" name="category_name" value="<%= category.name %>" onclick="toggleCategoryInput()" <%= product && product.category_name === category.name ? 'checked' : '' %> required>
           <%= category.name %>
         </label>
       <% }) %>
 
       <label>
-        <input type="radio" name="category" value="new_category" onclick="toggleCategoryInput()">
+        <input type="radio" name="category_name" value="new_category" <%= product && product.category_name === "new_category" ? 'checked' : '' %> onclick="toggleCategoryInput()">
         Add New Category
       </label>
 
       <label>
-        <input type="text" id="newCategoryText" name="newCategoryText" disabled required>
+        <input type="text" id="newCategoryText" name="newCategoryText" <%= product && product.category_name === "new_category" ? '' : 'disabled' %> required>
       </label>
     </fieldset>
 
     <fieldset>
       <% skintypes.forEach(skintype => { %>
         <label>
-          <input type="radio" name="skintype" value="<%= skintype.name %>" onclick="toggleSkintypeInput()" <%= product && product.skintype_name === skintype.name ? 'checked' : '' %> required>
+          <input type="radio" name="skintype_name" value="<%= skintype.name %>" onclick="toggleSkintypeInput()" <%= product && product.skintype_name === skintype.name ? 'checked' : '' %> required>
           <%= skintype.name %>
         </label>
       <% }) %>
 
       <label>
-        <input type="radio" name="skintype" value="new_skintype" onclick="toggleSkintypeInput()">
+        <input type="radio" name="skintype_name" value="new_skintype" <%= product && product.skintype_name === "new_skintype" ? 'checked' : '' %> onclick="toggleSkintypeInput()">
         Add New Skintype
       </label>
 
       <label>
-        <input type="text" id="newSkintypeText" name="newSkintypeText" disabled required>
+        <input type="text" id="newSkintypeText" name="newSkintypeText" <%= product && product.skintype_name === "new_skintype" ? '' : 'disabled' %> required>
       </label>
     </fieldset>
 

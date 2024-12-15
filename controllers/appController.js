@@ -1,5 +1,27 @@
 const db = require("../db/queries");
 require('dotenv').config();
+const { validationResult } = require("express-validator");
+
+// const validateProductForm = [
+//   body("name").trim()
+//     .notEmpty().withMessage("Product name is required")
+//     .isLength({ max: 255}).withMessage("Product name should be less than 255 characters"),
+//   body("description").trim()
+//     .notEmpty().withMessage("Product description is required")
+//     .isLength({ max: 1500 }).withMessage("Product description should be less than 1500 cheracters"),
+//   body("proto_url").trim()
+//     .notEmpty().withMessage("Product photo url is required")
+//     .isURL().withMessage("Please provide valid photo URL"),
+//   body("brand").notEmpty().withMessage("Please select brand"),
+//   body("newBrandText").optional().trim()
+//     .notEmpty().withMessage("New brand name is required"),
+//   body("category").notEmpty().withMessage("Please select category"),
+//   body("newCategoryText").optional().trim()
+//     .notEmpty().withMessage("New category is required"),
+//   body("skintype").notEmpty().withMessage("Please select skintype"),
+//   body("newSkintypeText").optional().trim()
+//     .notEmpty().withMessage("New skintype is required"),
+// ]
 
 function indexPageGet(req, res) {
   res.render("index");
@@ -24,7 +46,7 @@ async function productCardDelete(req, res) {
     const { password } = req.body;
 
     if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
-    
+
     const productID = parseInt(req.params.id);
     await db.deleteProduct(productID);
     res.redirect("/products");
@@ -82,12 +104,13 @@ async function productFormGet(req, res) {
     const categories = await db.getAllCategories();
     const skintypes = await db.getAllSkintypes();
     let product = null;
+    const errors = null;
 
     if (req.params.id) {
       product = await db.getProductByID(req.params.id);
     }
 
-    res.render("productForm", {brands, categories, skintypes, product});
+    res.render("productForm", {brands, categories, skintypes, product, errors});
   } catch (error) {
     console.error('Error opening new product form:', error);
     res.status(500).render('error', { 
@@ -97,32 +120,47 @@ async function productFormGet(req, res) {
   }
 }
 
-async function productsPost(req,res) {
+async function productsPost( req, res) {
   try {
-    let { password, name, description, photo_url, brand, category, skintype } = req.body;
+    let { password, name, description, photo_url, brand_name, category_name, skintype_name } = req.body;
 
     if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
 
-    if (req.body.newBrandText) {
-      brand = req.body.newBrandText;
-      await db.addNewBrand(brand);
+    const errors = validationResult(req);
+
+    console.log(errors.array());
+    console.log(req.body)
+    
+    if (!errors.isEmpty()) {
+      return res.status(400).render("productForm", {
+        brands: await db.getAllBrands(),
+        categories: await db.getAllCategories(),
+        skintypes: await db.getAllSkintypes(),
+        product: req.body,
+        errors: errors.array()
+      })
     }
 
-    const brandID = await db.getBrandIDByName(brand);
+    if (req.body.newBrandText) {
+      brand_name = req.body.newBrandText;
+      await db.addNewBrand(brand_name);
+    }
+
+    const brandID = await db.getBrandIDByName(brand_name);
  
     if (req.body.newCategoryText) {
-      category = req.body.newCategoryText;
-      await db.addNewCategory(category);
+      category_name = req.body.newCategoryText;
+      await db.addNewCategory(category_name);
     }
 
-    const categoryID = await db.getCategoryIDByName(category);
+    const categoryID = await db.getCategoryIDByName(category_name);
 
     if (req.body.newSkintypeText) {
-      skintype = req.body.newSkintypeText;
-      await db.addNewSkintype(skintype);
+      skintype_name = req.body.newSkintypeText;
+      await db.addNewSkintype(skintype_name);
     }
 
-    const skintypeID = await db.getSkintypeIDByName(skintype);
+    const skintypeID = await db.getSkintypeIDByName(skintype_name);
  
     const newProduct = {
       name,
