@@ -1,0 +1,52 @@
+<div class="products-page__filters">
+  <h2>Product Filters</h2>
+    
+  <form action="/products" method="GET">
+    <div class="products-page__filter-section">
+      <h3>Brands:</h3>
+      <% brands.forEach(brand => { %>
+        <label>
+          <input 
+            type="checkbox" 
+            name="brand" 
+            value="<%= brand.name %>" 
+            <%= filters && filters.brands && filters.brands.includes(brand.name) ? 'checked' : '' %>
+          />
+          <%= brand.name %>
+        </label>
+      <% }) %>
+    </div>
+
+    <div class="products-page__filter-section">
+      <h3>Categories:</h3>
+      <% categories.forEach(category => { %>
+        <label>
+          <input 
+            type="checkbox" 
+            name="category" 
+            value="<%= category.name %>" 
+            <%= filters && filters.categories && filters.categories.includes(category.name) ? 'checked' : '' %>
+          />
+          <%= category.name %>
+        </label>
+      <% }) %>
+    </div>
+
+    <div class="products-page__filter-section">
+      <h3>Skin Types:</h3>
+      <% skintypes.forEach(skintype => { %>
+        <label>
+          <input 
+            type="checkbox" 
+            name="skintype" 
+            value="<%= skintype.name %>" 
+            <%= filters && filters.skintypes && filters.skintypes.includes(skintype.name) ? 'checked' : '' %>
+          />
+          <%= skintype.name %>
+        </label>
+      <% }) %>
+    </div>
+
+    <button type="submit">Apply Filters</button>
+  </form>
+</div>
