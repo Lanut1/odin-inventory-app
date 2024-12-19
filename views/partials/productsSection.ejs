@@ -1,15 +1,20 @@
-<div class="products-page__products">
-  <h2>All Products</h2>
-  <button>
-    <a href="/forms/new-product">Add New Product</a>
-  </button>
+<div class="products-page__products-container">
+  <div class="products-page__products-header">
+    <h2>All Products</h2>
+    <button>
+      <a href="/forms/new-product">Add New Product</a>
+    </button> 
+  </div>
+
   <% if (products.length === 0) { %>
-    <p>No products found matching your filters.</p>
+    <h3>No products found matching your filters.</h3>
   <% } else { %>
-    <ul class="product-list">
+    <ul class="products-page__products-list">
       <% products.forEach(product => { %>
-        <li class="product-item">
-          <h3><%= product.name %></h3>
+        <li class="products-page__product-item">
+          <div class="products-page__product-name">
+            <h3><%= product.name %></h3>
+          </div>
           <img src="<%= product.photo_url %>" alt="<%= product.name %>" />
           <button>
             <a href="/products/<%= product.id %>">View Product</a>
@@ -18,6 +23,7 @@
       <% }) %>
     </ul>
   <% } %>
+
   <button>
     <a href="/">Go Back</a>
   </button>
