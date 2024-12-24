@@ -1,0 +1,24 @@
+<fieldset>
+  <legend>Select brand:</legend>
+
+  <div class="product-form__fieldset--first">
+    <% brands.forEach(brand => { %>
+      <label class="product-form__label--radio">
+        <input type="radio" name="brand_name" value="<%= brand.name %>" onclick="toggleBrandInput()" <%= product && product.brand_name === brand.name ? 'checked' : '' %> required>
+        <%= brand.name %>
+      </label>
+    <% }) %>
+  </div>
+
+  <div class="product-form__fieldset--second">
+    <label class="product-form__label--radio">
+      <input type="radio" name="brand_name" value="new_brand" <%= product && product.brand_name === "new_brand" ? 'checked' : '' %> onclick="toggleBrandInput()">
+      Add New
+    </label>
+
+    <label>
+      <input type="text" id="newBrandText" name="newBrandText" value="<%= product && product.newBrandText ? product.newBrandText : '' %>" <%= product && product.brand_name === "new_brand" ? '' : 'disabled' %> required>
+    </label>
+  </div>
+
+</fieldset>

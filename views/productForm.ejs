@@ -8,138 +8,61 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <script defer src="/js/productForm.js"></script>
 </head>
 <body>
-  <form action="/products<%= product ? '/' + product.id + '?_method=PUT' : '' %>" method="POST">
-    <label>
-      <input type="password" name="password" required>
-      Please Enter Admin Password:
-    </label>
-    
-    <% if (product) { %>
-      <input type="hidden" name="_method" value="PUT">
-    <% }%>
+  <%- include('partials/header')%>
+  
+  <main class="product-form__container">
+    <h2 class="product-form__header"><%= product ? 'Update product' : 'Add New Product' %></h2>
 
-    <% if (errors) { %>
-      <% errors.forEach(error => { %>
-        <div><%= error.msg %></div>
-      <% })%>
-    <% } %>
+    <form action="/products<%= product ? '/' + product.id + '?_method=PUT' : '' %>" method="POST" class="product-form">
+      <label class="product-form__label--text">
+        <b>Please Enter Admin Password:</b>
+        <input type="password" name="password" required>
+      </label>
+      
+      <% if (product) { %>
+        <input type="hidden" name="_method" value="PUT">
+      <% }%>
 
-    <label>
-      <input type="text" name="name" id="name" value="<%= product ? product.name : '' %>" maxlength="255" required>
-      Product Name:
-    </label>
+      <% if (errors) { %>
+        <% errors.forEach(error => { %>
+          <div><%= error.msg %></div>
+        <% })%>
+      <% } %>
 
-    <label>
-      <input type="text" name="description" value="<%= product ? product.description : '' %>" required>
-      Product Description:
-    </label>
-
-    <label>
-      <input type="text" name="photo_url" value="<%= product ? product.photo_url : '' %>" required>
-      Product Photo:
-    </label>
-
-    <fieldset>
-      <% brands.forEach(brand => { %>
-        <label>
-          <input type="radio" name="brand_name" value="<%= brand.name %>" onclick="toggleBrandInput()" <%= product && product.brand_name === brand.name ? 'checked' : '' %> required>
-          <%= brand.name %>
-        </label>
-      <% }) %>
-
-      <label>
-        <input type="radio" name="brand_name" value="new_brand" <%= product && product.brand_name === "new_brand" ? 'checked' : '' %> onclick="toggleBrandInput()">
-        Add New Brand
+      <label class="product-form__label--text">
+        <b>Product Name:</b>
+        <input type="text" name="name" id="name" value="<%= product ? product.name : '' %>" maxlength="255" required>
       </label>
 
-      <label>
-        <input type="text" id="newBrandText" name="newBrandText" value="<%= product && product.newBrandText ? product.newBrandText : '' %>" <%= product && product.brand_name === "new_brand" ? '' : 'disabled' %> required>
-      </label>
-    </fieldset>
-
-    <fieldset>
-      <% categories.forEach(category => { %>
-        <label>
-          <input type="radio" name="category_name" value="<%= category.name %>" onclick="toggleCategoryInput()" <%= product && product.category_name === category.name ? 'checked' : '' %> required>
-          <%= category.name %>
-        </label>
-      <% }) %>
-
-      <label>
-        <input type="radio" name="category_name" value="new_category" <%= product && product.category_name === "new_category" ? 'checked' : '' %> onclick="toggleCategoryInput()">
-        Add New Category
+      <label class="product-form__label--text">
+        <b>Product Description:</b>
+        <input type="text" name="description" value="<%= product ? product.description : '' %>" required>
       </label>
 
-      <label>
-        <input type="text" id="newCategoryText" name="newCategoryText" <%= product && product.category_name === "new_category" ? '' : 'disabled' %> required>
-      </label>
-    </fieldset>
-
-    <fieldset>
-      <% skintypes.forEach(skintype => { %>
-        <label>
-          <input type="radio" name="skintype_name" value="<%= skintype.name %>" onclick="toggleSkintypeInput()" <%= product && product.skintype_name === skintype.name ? 'checked' : '' %> required>
-          <%= skintype.name %>
-        </label>
-      <% }) %>
-
-      <label>
-        <input type="radio" name="skintype_name" value="new_skintype" <%= product && product.skintype_name === "new_skintype" ? 'checked' : '' %> onclick="toggleSkintypeInput()">
-        Add New Skintype
+      <label class="product-form__label--text">
+        <b>Product Photo:</b>
+        <input type="text" name="photo_url" value="<%= product ? product.photo_url : '' %>" required>
       </label>
 
-      <label>
-        <input type="text" id="newSkintypeText" name="newSkintypeText" <%= product && product.skintype_name === "new_skintype" ? '' : 'disabled' %> required>
-      </label>
-    </fieldset>
+      <%- include('partials/brandFieldset')%>
 
-    <button type="submit">
-      <%= product ? 'Update product' : 'Add Product' %>
-    </button>
-    <button type="button">
-      <a href="/products">Go Back</a>
-    </button>
-  </form>
+      <%- include('partials/categoryFieldset')%>
 
-  <script>
-    function toggleBrandInput() {
-      const newBrandRadio = document.querySelector("input[value='new_brand']");
-      const newBrandText = document.getElementById("newBrandText");
+      <%- include('partials/skintypeFieldset')%>
 
-      if (newBrandRadio.checked) {
-        newBrandText.disabled = false;
-      } else {
-        newBrandText.disabled = true;
-        newBrandText.value = '';
-      }
-    }
+      <div class="product-form__buttons">
+        <button type="submit">
+          <%= product ? 'Update product' : 'Add Product' %>
+        </button>
+        <button type="button">
+          <a href="/products">Go Back</a>
+        </button>
+      </div>
 
-    function toggleCategoryInput() {
-      const newCategoryRadio = document.querySelector("input[value='new_category']");
-      const newCategoryText = document.getElementById("newCategoryText");
-
-      if (newCategoryRadio.checked) {
-        newCategoryText.disabled = false;
-      } else {
-        newCategoryText.disabled = true;
-        newCategoryText.value = '';
-      }
-    }
-
-    function toggleSkintypeInput() {
-      const newSkintypeRadio = document.querySelector("input[value='new_skintype']");
-      const newSkintypeText = document.getElementById("newSkintypeText");
-
-      if (newSkintypeRadio.checked) {
-        newSkintypeText.disabled = false;
-      } else {
-        newSkintypeText.disabled = true;
-        newSkintypeText.value = '';
-      }
-    }
-  </script>
-
+    </form>
+  </main>
 </body>
 </html>
