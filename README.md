@@ -43,7 +43,7 @@ To run the Odin Inventory App locally, follow these steps:
 
 4. **Run Database Script to Seed Data**:
    ```bash
-   node db/populatedb.js
+   npm run populatedb
    ```
 
 5. **Start the Application**:
@@ -53,7 +53,7 @@ To run the Odin Inventory App locally, follow these steps:
      ```
    - To start the application, run:
      ```bash
-     node app.js
+     npm start
      ```
 
 6. **Visit the Application**:
