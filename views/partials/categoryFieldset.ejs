@@ -2,12 +2,14 @@
   <legend>Select category:</legend>
 
   <div class="product-form__fieldset--first">
-    <% categories.forEach(category => { %>
-      <label class="product-form__label--radio">
-        <input type="radio" name="category_name" value="<%= category.name %>" onclick="toggleCategoryInput()" <%= product && product.category_name === category.name ? 'checked' : '' %> required>
-        <%= category.name %>
-      </label>
-    <% }) %>
+    <% if (categories.length > 0) { %>
+      <% categories.forEach(category => { %>
+        <label class="product-form__label--radio">
+          <input type="radio" name="category_name" value="<%= category.name %>" onclick="toggleCategoryInput()" <%= product && product.category_name === category.name ? 'checked' : '' %> required>
+          <%= category.name %>
+        </label>
+      <% }) %>
+    <% } %>
   </div>
 
   <div class="product-form__fieldset--second">

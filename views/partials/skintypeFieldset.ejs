@@ -2,12 +2,14 @@
   <legend>Select skintype:</legend>
 
   <div class="product-form__fieldset--first">
-    <% skintypes.forEach(skintype => { %>
-      <label class="product-form__label--radio">
-        <input type="radio" name="skintype_name" value="<%= skintype.name %>" onclick="toggleSkintypeInput()" <%= product && product.skintype_name === skintype.name ? 'checked' : '' %> required>
-        <%= skintype.name %>
-      </label>
-    <% }) %>
+    <% if (skintypes.length > 0) { %>
+      <% skintypes.forEach(skintype => { %>
+        <label class="product-form__label--radio">
+          <input type="radio" name="skintype_name" value="<%= skintype.name %>" onclick="toggleSkintypeInput()" <%= product && product.skintype_name === skintype.name ? 'checked' : '' %> required>
+          <%= skintype.name %>
+        </label>
+      <% }) %>
+    <% } %>
   </div>
 
   <div class="product-form__fieldset--second">

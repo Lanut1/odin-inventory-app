@@ -2,27 +2,6 @@ const db = require("../db/queries");
 require('dotenv').config();
 const { validationResult } = require("express-validator");
 
-// const validateProductForm = [
-//   body("name").trim()
-//     .notEmpty().withMessage("Product name is required")
-//     .isLength({ max: 255}).withMessage("Product name should be less than 255 characters"),
-//   body("description").trim()
-//     .notEmpty().withMessage("Product description is required")
-//     .isLength({ max: 1500 }).withMessage("Product description should be less than 1500 cheracters"),
-//   body("proto_url").trim()
-//     .notEmpty().withMessage("Product photo url is required")
-//     .isURL().withMessage("Please provide valid photo URL"),
-//   body("brand").notEmpty().withMessage("Please select brand"),
-//   body("newBrandText").optional().trim()
-//     .notEmpty().withMessage("New brand name is required"),
-//   body("category").notEmpty().withMessage("Please select category"),
-//   body("newCategoryText").optional().trim()
-//     .notEmpty().withMessage("New category is required"),
-//   body("skintype").notEmpty().withMessage("Please select skintype"),
-//   body("newSkintypeText").optional().trim()
-//     .notEmpty().withMessage("New skintype is required"),
-// ]
-
 function indexPageGet(req, res) {
   res.render("index");
 }
@@ -30,11 +9,14 @@ function indexPageGet(req, res) {
 async function productCardGet(req, res) {
   try {
     const productID = parseInt(req.params.id);
+
+    if (isNaN(productID)) throw new Error('Invalid product ID');
+
     const product = await db.getProductByID(productID);
     res.render("productCard", {product});
   } catch (error) {
     console.error('Error fetching product info:', error);
-    res.status(500).render('error', { 
+    res.status(500).render('errorPage', { 
       message: 'Unable to fetch product info', 
       error: error.message
     });
@@ -48,11 +30,14 @@ async function productCardDelete(req, res) {
     if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
 
     const productID = parseInt(req.params.id);
+
+    if (isNaN(productID)) throw new Error('Invalid product ID');
+
     await db.deleteProduct(productID);
     res.redirect("/products");
   } catch (error) {
     console.error('Error deleting product card:', error);
-    res.status(500).render('error', { 
+    res.status(500).render('errorPage', { 
       message: 'Unable to delete product', 
       error: error.message
     });
@@ -91,7 +76,7 @@ async function productsGet(req, res) {
     
   } catch (error) { 
     console.error('Error fetching filtered products:', error);
-    res.status(500).render('error', { 
+    res.status(500).render('errorPage', { 
       message: 'Unable to fetch products', 
       error: error.message
     });
@@ -113,7 +98,7 @@ async function productFormGet(req, res) {
     res.render("productForm", {brands, categories, skintypes, product, errors});
   } catch (error) {
     console.error('Error opening new product form:', error);
-    res.status(500).render('error', { 
+    res.status(500).render('errorPage', { 
       message: 'Unable to open product form', 
       error: error.message
     });
@@ -127,9 +112,6 @@ async function productsPost( req, res) {
     if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
 
     const errors = validationResult(req);
-
-    console.log(errors.array());
-    console.log(req.body)
     
     if (!errors.isEmpty()) {
       return res.status(400).render("productForm", {
@@ -180,7 +162,7 @@ async function productsPost( req, res) {
     res.redirect("/products");
   } catch (error) {
     console.error('Error adding new product:', error);
-    res.status(500).render('error', { 
+    res.status(500).render('errorPage', { 
       message: 'Unable to add new product', 
       error: error.message
     });

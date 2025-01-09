@@ -1,7 +1,7 @@
 const pool = require("./pool");
 
 async function getProductByID(id) {
-  const { rows } = await pool.query(`
+  const result = await pool.query(`
     SELECT p.*,
       b.name AS brand_name,
       c.name AS category_name,
@@ -14,18 +14,33 @@ async function getProductByID(id) {
     [id]
   );
 
-  return rows[0];
+  if (result.rowCount === 0) {
+    throw new Error(`Product with ID ${id} not found`);
+  }
+
+  return result.rows[0];
 }
 
 async function addNewProduct(newProduct) {
-  await pool.query(`
-    INSERT INTO products (name, description, photo_url, brand_id, category_id, skintype_id) VALUES
-      ($1, $2, $3, $4, $5, $6);
-    `, [ newProduct.name, newProduct.description, newProduct.photo_url, newProduct.brand_id, newProduct.category_id, newProduct.skintype_id ]);
+  const result = await pool.query(`
+    INSERT INTO products (name, description, photo_url, brand_id, category_id, skintype_id)
+    VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;
+    `, [ 
+      newProduct.name,
+      newProduct.description,
+      newProduct.photo_url,
+      newProduct.brand_id,
+      newProduct.category_id,
+      newProduct.skintype_id
+    ]);
+
+  if (result.rowCount === 0) {
+    throw new Error("Failed to add new product");
+  }
 }
 
 async function updateProduct(id, newProduct) {
-  await pool.query(`
+  const result = await pool.query(`
     UPDATE products
     SET
       name = $1,
@@ -34,13 +49,28 @@ async function updateProduct(id, newProduct) {
       brand_id = $4,
       category_id = $5,
       skintype_id = $6
-    WHERE id = $7
-    `, [ newProduct.name, newProduct.description, newProduct.photo_url, newProduct.brand_id, newProduct.category_id, newProduct.skintype_id, id]);
+    WHERE id = $7 RETURNING id;
+    `, [
+      newProduct.name,
+      newProduct.description,
+      newProduct.photo_url,
+      newProduct.brand_id,
+      newProduct.category_id,
+      newProduct.skintype_id,
+      id
+    ]);
   
+    if (result.rowCount === 0) {
+      throw new Error(`Failed to update product with ID ${id}`);
+    }
 }
 
 async function deleteProduct(id) {
-  await pool.query("DELETE FROM products WHERE products.id = $1", [id]);
+  const result = await pool.query("DELETE FROM products WHERE products.id = $1 RETURNING id", [id]);
+
+  if (result.rowCount === 0) {
+    throw new Error(`Failed to delete product with ID ${id}`);
+  }
 }
 
 async function getAllBrands() {
@@ -49,12 +79,21 @@ async function getAllBrands() {
 }
 
 async function getBrandIDByName(name) {
-  const { rows } = await pool.query("SELECT id FROM brand WHERE brand.name = $1", [name]);
-  return rows[0];
+  const result = await pool.query("SELECT id FROM brand WHERE brand.name = $1", [name]);
+
+  if (result.rowCount === 0) {
+    throw new Error(`Brand with name '${name}' not found`);
+  }
+
+  return result.rows[0];
 }
 
 async function addNewBrand(name) {
-  await pool.query("INSERT INTO brand (name) VALUES ($1)", [name]);
+  const result = await pool.query("INSERT INTO brand (name) VALUES ($1) RETURNING id", [name]);
+
+  if (result.rowCount === 0) {
+    throw new Error(`Failed to add new brand with name '${name}'`);
+  }
 }
 
 async function getAllCategories() {
@@ -63,12 +102,21 @@ async function getAllCategories() {
 }
 
 async function getCategoryIDByName(name) {
-  const { rows } = await pool.query("SELECT id FROM category WHERE category.name = $1", [name]);
-  return rows[0];
+  const result = await pool.query("SELECT id FROM category WHERE category.name = $1", [name]);
+
+  if (result.rowCount === 0) {
+    throw new Error(`Category with name '${name}' not found`);
+  }
+
+  return result.rows[0];
 }
 
 async function addNewCategory(name) {
-  await pool.query("INSERT INTO category (name) VALUES ($1)", [name]);
+  const result = await pool.query("INSERT INTO category (name) VALUES ($1) RETURNING id", [name]);
+
+  if (result.rowCount === 0) {
+    throw new Error(`Failed to add new category with name '${name}'`);
+  }
 }
 
 async function getAllSkintypes() {
@@ -77,12 +125,21 @@ async function getAllSkintypes() {
 }
 
 async function getSkintypeIDByName(name) {
-  const { rows } = await pool.query("SELECT id FROM skintype WHERE skintype.name = $1", [name]);
-  return rows[0];
+  const result = await pool.query("SELECT id FROM skintype WHERE skintype.name = $1", [name]);
+
+  if (result.rowCount === 0) {
+    throw new Error(`Skintype with name '${name}' not found`);
+  }
+
+  return result.rows[0];
 }
 
 async function addNewSkintype(name) {
-  await pool.query("INSERT INTO skintype (name) VALUES ($1)", [name]);
+  const result = await pool.query("INSERT INTO skintype (name) VALUES ($1) RETURNING id", [name]);
+
+  if (result.rowCount === 0) {
+    throw new Error(`Failed to add new skintype with name '${name}'`);
+  }
 }
 
 async function getProducts(brands, categories, skintypes) {
