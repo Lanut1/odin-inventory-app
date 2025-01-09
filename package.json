@@ -4,7 +4,8 @@
   "description": "The inventory application for practicing PostgreSQL and Express app",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "populatedb": "node db/populatedb.js"
   },
   "repository": {
     "type": "git",
