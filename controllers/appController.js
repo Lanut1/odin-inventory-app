@@ -6,7 +6,7 @@ function indexPageGet(req, res) {
   res.render("index");
 }
 
-async function productCardGet(req, res) {
+async function productCardGet(req, res, next) {
   try {
     const productID = parseInt(req.params.id);
 
@@ -15,15 +15,11 @@ async function productCardGet(req, res) {
     const product = await db.getProductByID(productID);
     res.render("productCard", {product});
   } catch (error) {
-    console.error('Error fetching product info:', error);
-    res.status(500).render('errorPage', { 
-      message: 'Unable to fetch product info', 
-      error: error.message
-    });
+    next(error);
   }
 }
 
-async function productCardDelete(req, res) {
+async function productCardDelete(req, res, next) {
   try {
     const { password } = req.body;
 
@@ -36,15 +32,11 @@ async function productCardDelete(req, res) {
     await db.deleteProduct(productID);
     res.redirect("/products");
   } catch (error) {
-    console.error('Error deleting product card:', error);
-    res.status(500).render('errorPage', { 
-      message: 'Unable to delete product', 
-      error: error.message
-    });
+    next(error);
   }
 }
 
-async function productsGet(req, res) {
+async function productsGet(req, res, next) {
   try {
     const filterBrands = req.query.brand ? 
       (Array.isArray(req.query.brand) ? req.query.brand : [req.query.brand]) 
@@ -75,15 +67,11 @@ async function productsGet(req, res) {
     });
     
   } catch (error) { 
-    console.error('Error fetching filtered products:', error);
-    res.status(500).render('errorPage', { 
-      message: 'Unable to fetch products', 
-      error: error.message
-    });
+    next(error);
   }
 }
 
-async function productFormGet(req, res) {
+async function productFormGet(req, res, next) {
   try {
     const brands = await db.getAllBrands();
     const categories = await db.getAllCategories();
@@ -97,15 +85,11 @@ async function productFormGet(req, res) {
 
     res.render("productForm", {brands, categories, skintypes, product, errors});
   } catch (error) {
-    console.error('Error opening new product form:', error);
-    res.status(500).render('errorPage', { 
-      message: 'Unable to open product form', 
-      error: error.message
-    });
+    next(error);
   }
 }
 
-async function productsPost( req, res) {
+async function productsPost(req, res, next) {
   try {
     let { password, name, description, photo_url, brand_name, category_name, skintype_name } = req.body;
 
@@ -161,11 +145,7 @@ async function productsPost( req, res) {
     
     res.redirect("/products");
   } catch (error) {
-    console.error('Error adding new product:', error);
-    res.status(500).render('errorPage', { 
-      message: 'Unable to add new product', 
-      error: error.message
-    });
+    next(error);
   }
 }  
 

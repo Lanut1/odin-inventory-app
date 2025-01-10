@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const controller = require("../controllers/appController");
 const router = Router();
-const validator = require("../validators/productValidator");
+const validator = require("../middleware/productValidator");
 
 router.get("/", controller.indexPageGet);
 router.get("/products", controller.productsGet);
