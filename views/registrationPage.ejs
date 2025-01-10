@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <main>
+
+    <form action="/register" method="POST">
+      <label class="registration-form__label--text">
+        <b>Your Email:</b>
+        <input type="email" name="email" maxlength="255" required>
+      </label>
+
+      <label class="registration-form__label--text">
+        <b>Username:</b>
+        <input type="text" name="username" maxlength="255" required>
+      </label>
+
+      <label class="registration-form__label--text">
+        <b>Enter Password:</b>
+        <input type="password" name="password" minlength="8" maxlength="255" required>
+      </label>
+
+      <label class="registration-form__label--text">
+        <b>Confirm Password:</b>
+        <input type="password" name="passwordConfirm" minlength="8" maxlength="255" required>
+      </label>
+
+      <button type="submit">
+        Register
+      </button>
+
+      <div class="registration-form__login">
+        <p>Already have an account?</p>
+        <button type="button">
+          <a href="/login">Log In</a>
+        </button>
+      </div>
+
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Log In</title>
+</head>
+<body>
+  <%- include('partials/header') %>
+
+  <main>
+    <form action="/login" method="POST">
+      <label class="login-form__label--text">
+        <b>Email or Username:</b>
+        <input type="text" name="user" maxlength="255" required>
+      </label>
+
+      <label class="login-form__label--text">
+        <b>Password:</b>
+        <input type="password" name="password" minlength="8" maxlength="255" required>
+      </label>
+
+      <button type="submit">
+        Log In
+      </button>
+
+      <div class="login-form__register">
+        <p>New to PROCosmetics?</p>
+        <button>
+          <a href="/register">Create Account</a>
+        </button>
+      </div>
+
+    </form>
+  </main>
+  
+</body>
+</html>
