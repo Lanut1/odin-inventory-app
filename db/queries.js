@@ -94,6 +94,8 @@ async function addNewBrand(name) {
   if (result.rowCount === 0) {
     throw new Error(`Failed to add new brand with name '${name}'`);
   }
+
+  return result.rows[0];
 }
 
 async function getAllCategories() {
@@ -117,6 +119,8 @@ async function addNewCategory(name) {
   if (result.rowCount === 0) {
     throw new Error(`Failed to add new category with name '${name}'`);
   }
+
+  return result.rows[0];
 }
 
 async function getAllSkintypes() {
@@ -140,6 +144,8 @@ async function addNewSkintype(name) {
   if (result.rowCount === 0) {
     throw new Error(`Failed to add new skintype with name '${name}'`);
   }
+
+  return result.rows[0];
 }
 
 async function getProducts(brands, categories, skintypes) {

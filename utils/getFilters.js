@@ -1,0 +1,1 @@
+module.exports = (filter) => (filter ? (Array.isArray(filter) ? filter : [filter]) : []);
