@@ -9,4 +9,4 @@ router.get("/:id", controller.productCardGet);
 router.delete("/:id", controller.productCardDelete);
 router.put("/:id", validator, controller.productsPost);
 
-module.exports = router;
+module.exports = router; 

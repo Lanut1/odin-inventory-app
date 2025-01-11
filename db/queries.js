@@ -191,6 +191,32 @@ async function getProducts(brands, categories, skintypes) {
   return rows;
 }
 
+async function checkUsername(username) {
+  const result = await pool.query("SELECT id FROM users WHERE username = $1", [username]);
+
+  return result.rowCount;
+}
+
+async function checkEmail(email) {
+  const result = await pool.query("SELECT id FROM users WHERE email = $1", [email]);
+
+  return result.rowCount;
+}
+
+async function registerUser(user) {
+  const result = await pool.query(`
+    INSERT INTO users (username, email, password_hash, status)
+    VALUES ($1, $2, $3, $4) RETURNING id;
+  `, [
+    user.username,
+    user.email,
+    user.password_hash,
+    user.status
+  ]);
+
+  if (result.rowCount === 0) throw new Error("Failed to register new user");
+}
+
 module.exports = {
   getProductByID,
   addNewProduct,
@@ -205,5 +231,8 @@ module.exports = {
   getAllSkintypes,
   getSkintypeIDByName,
   addNewSkintype,
-  getProducts
+  getProducts,
+  checkUsername,
+  checkEmail,
+  registerUser
 }
