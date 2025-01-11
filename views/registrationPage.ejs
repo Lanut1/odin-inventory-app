@@ -8,16 +8,21 @@
 <body>
   <%- include('partials/header') %>
   <main>
+    <% if (errors) { %>
+      <% errors.forEach(error => { %>
+        <div><%= error.msg %></div>
+      <% })%>
+    <% } %>
 
-    <form action="/register" method="POST">
+    <form action="/auth/register" method="POST">
       <label class="registration-form__label--text">
         <b>Your Email:</b>
-        <input type="email" name="email" maxlength="255" required>
+        <input type="email" name="email" value="<%= email ? email : '' %>" maxlength="255" required>
       </label>
 
       <label class="registration-form__label--text">
         <b>Username:</b>
-        <input type="text" name="username" maxlength="255" required>
+        <input type="text" name="username" value="<%= username ? username : '' %>" maxlength="255" required>
       </label>
 
       <label class="registration-form__label--text">
