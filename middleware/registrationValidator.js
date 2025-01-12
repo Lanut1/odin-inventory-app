@@ -3,12 +3,12 @@ const db = require("../db/queries");
 
 const validateUserRegistration = [
   body("password")
-    .isLength({ min: 8 }).withMessage("Password must be at least 8 characters")
+    .trim().isLength({ min: 8 }).withMessage("Password must be at least 8 characters")
     .custom((value, {req}) => value === req.body.passwordConfirm).withMessage("Passwords don't match")
     .matches('[0-9]').withMessage("Password must contain a number")
     .matches('[A-Z]').withMessage("Password must contain an uppercase letter"),
   body("username")
-    .trim().escape().notEmpty().withMessage("Username is required")
+    .trim().notEmpty().withMessage("Username is required")
     .custom(async value => {
       const records = await db.checkUsername(value);
 

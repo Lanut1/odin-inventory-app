@@ -7,12 +7,18 @@
 </head>
 <body>
   <%- include('partials/header') %>
-  
+
+  <% if (errors) { %>
+    <% errors.forEach(error => { %>
+      <div><%= error.msg %></div>
+    <% })%>
+  <% } %>
+
   <main>
-    <form action="/login" method="POST">
+    <form action="/auth/login" method="POST">
       <label class="login-form__label--text">
-        <b>Email or Username:</b>
-        <input type="text" name="user" maxlength="255" required>
+        <b>Username:</b>
+        <input type="text" name="username" value="<%= username ? username : '' %>" maxlength="255" required>
       </label>
 
       <label class="login-form__label--text">
@@ -27,7 +33,7 @@
       <div class="login-form__register">
         <p>New to PROCosmetics?</p>
         <button>
-          <a href="/register">Create Account</a>
+          <a href="/auth/register">Create Account</a>
         </button>
       </div>
 
