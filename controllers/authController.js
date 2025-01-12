@@ -8,7 +8,8 @@ function registerPageGet(req, res) {
   res.render("registrationPage", {
     username: null,
     email: null,
-    errors: null
+    errors: null,
+    user: null
   });
 }
 
@@ -46,7 +47,8 @@ async function registerPagePost(req, res, next) {
 function loginPageGet(req, res) {
   res.render("loginPage", {
     username: null,
-    errors: null
+    errors: null,
+    user: null
   });
 }
 
@@ -58,6 +60,7 @@ async function loginPagePost(req, res, next) {
       return res.status(400).render("loginPage", {
         errors: errors.array(),
         username: req.body.username,
+        user: null
       });
     }
     passport.authenticate("local", (err, user, info) => {
@@ -68,6 +71,7 @@ async function loginPagePost(req, res, next) {
         return res.status(401).render("loginPage", {
           errors: [{ msg: info.message }],
           username: req.body.username,
+          user: null
         });
       }
 
@@ -84,9 +88,25 @@ async function loginPagePost(req, res, next) {
   }
 }
 
+async function logoutGet(req, res, next) {
+  try {
+    req.logout((err) => {
+      if (err) {
+        return next(err);
+      }
+
+      console.log("Logged out!")
+      res.redirect("/");
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   registerPageGet,
   registerPagePost,
   loginPageGet,
-  loginPagePost
+  loginPagePost,
+  logoutGet
 }
