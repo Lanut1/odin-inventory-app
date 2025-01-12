@@ -48,6 +48,10 @@ async function productsGet(req, res, next) {
       db.getProducts(filterBrands, filterCategories, filterSkintypes)
     ]);
 
+    if (req.isAuthenticated()){
+      console.log("Logged in!")
+    }
+
     res.render("products", {
       products,
       brands,

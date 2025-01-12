@@ -217,6 +217,18 @@ async function registerUser(user) {
   if (result.rowCount === 0) throw new Error("Failed to register new user");
 }
 
+async function getUserInfoByUsername(username) {
+  const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+
+  return result.rows[0];
+}
+
+async function getUserInfoByID(id) {
+  const result = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+
+  return result.rows[0];
+}
+
 module.exports = {
   getProductByID,
   addNewProduct,
@@ -234,5 +246,7 @@ module.exports = {
   getProducts,
   checkUsername,
   checkEmail,
-  registerUser
+  registerUser,
+  getUserInfoByUsername,
+  getUserInfoByID
 }
