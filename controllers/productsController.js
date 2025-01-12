@@ -37,6 +37,8 @@ async function productsGet(req, res, next) {
   try {
     const { brand, category, skintype } = req.query;
 
+    let user = null;
+
     const filterBrands = getFilters(brand);
     const filterCategories = getFilters(category);
     const filterSkintypes = getFilters(skintype);
@@ -50,6 +52,7 @@ async function productsGet(req, res, next) {
 
     if (req.isAuthenticated()){
       console.log("Logged in!")
+      user = req.user;
     }
 
     res.render("products", {
@@ -61,7 +64,8 @@ async function productsGet(req, res, next) {
         brands: filterBrands,
         categories: filterCategories,
         skintypes: filterSkintypes
-      }
+      },
+      user
     });
     
   } catch (error) { 

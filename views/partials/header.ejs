@@ -1,3 +1,11 @@
 <header>
   <h1><a href="/">PROcosmetics</a></h1>
+  <% if (user) { %>
+    <button>
+      <a href="/auth/log-out">Log Out</a>
+    </button>
+  <% } else { %>
+    <button><a href="/auth/register">Register</a></button>
+    <button><a href="/auth/login">Login</a></button>
+  <% } %>
 </header>
