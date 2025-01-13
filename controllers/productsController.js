@@ -6,11 +6,29 @@ const getFilters = require("../utils/getFilters");
 async function productCardGet(req, res, next) {
   try {
     const productID = parseInt(req.params.id);
+    let user = null;
 
     if (isNaN(productID)) throw new Error('Invalid product ID');
 
-    const product = await db.getProductByID(productID);
-    res.render("productCard", {product});
+    const [product, reviews] = await Promise.all([
+      db.getProductByID(productID),
+      db.getProductReviews(productID)
+    ]);
+
+    // const product = await db.getProductByID(productID);
+    // const reviews = await db.getProductReviews(productID);
+
+    if (req.isAuthenticated()){
+      console.log("Logged in!")
+      user = req.user;
+    }
+
+    res.render("productCard", {
+      product,
+      user,
+      reviews,
+      errors: null
+    });
   } catch (error) {
     next(error);
   }
@@ -90,6 +108,12 @@ async function productsPost(req, res, next) {
 
     if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
 
+    let user = null;
+
+    if (req.isAuthenticated()) {
+      user = req.user;
+    }
+
     const errors = validationResult(req);
     
     if (!errors.isEmpty()) {
@@ -104,7 +128,8 @@ async function productsPost(req, res, next) {
         categories,
         skintypes,
         product: req.body,
-        errors: errors.array()
+        errors: errors.array(),
+        user
       })
     }
 
@@ -135,9 +160,48 @@ async function productsPost(req, res, next) {
   }
 } 
 
+async function productReviewPost(req, res, next) {
+  try {
+    const errors = validationResult(req);
+
+    const productID = parseInt(req.params.id);
+    if (isNaN(productID)) throw new Error('Invalid product ID');
+
+    const user = req.user;
+
+    if (!errors.isEmpty()) {
+      const [product, reviews] = await Promise.all([
+        db.getProductByID(productID),
+        db.getProductReviews(productID)
+      ]);
+
+      console.log(errors);
+      return res.status(500).render("productCard", {
+        product,
+        user,
+        reviews,
+        errors: errors.array()
+      });
+    }
+
+    const newReview = {
+      message: req.body.review,
+      userID: user.id,
+      productID
+    }
+
+    await db.addProductReview(newReview);
+
+    res.redirect(`/products/${productID}`);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   productsGet,
   productsPost,
   productCardGet,
-  productCardDelete
+  productCardDelete,
+  productReviewPost
 }

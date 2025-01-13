@@ -11,12 +11,17 @@ async function productFormGet(req, res, next) {
 
     let product = null;
     const errors = null;
+    let user = null;
+
+    if (req.isAuthenticated()) {
+      user = req.user;
+    }
 
     if (req.params.id) {
       product = await db.getProductByID(req.params.id);
     }
 
-    res.render("productForm", {brands, categories, skintypes, product, errors});
+    res.render("productForm", {brands, categories, skintypes, product, errors, user});
   } catch (error) {
     next(error);
   }

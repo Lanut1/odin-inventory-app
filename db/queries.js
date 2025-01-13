@@ -229,6 +229,30 @@ async function getUserInfoByID(id) {
   return result.rows[0];
 }
 
+async function getProductReviews(id) {
+  const result = await pool.query(`
+    SELECT r.message, r.time, u.username
+    FROM reviews r
+    JOIN users u ON r.user_id = u.id
+    WHERE r.product_id = $1;
+  `, [id]);
+
+  return result.rows;
+}
+
+async function addProductReview(review) {
+  const result = await pool.query(`
+    INSERT INTO reviews (message, user_id, product_id)
+    VALUES ($1, $2, $3) RETURNING id;
+    `, [
+      review.message,
+      review.userID,
+      review.productID
+  ])
+
+  if (result.rowCount === 0) throw new Error("Failed to add product review");
+}
+
 module.exports = {
   getProductByID,
   addNewProduct,
@@ -248,5 +272,7 @@ module.exports = {
   checkEmail,
   registerUser,
   getUserInfoByUsername,
-  getUserInfoByID
+  getUserInfoByID,
+  getProductReviews,
+  addProductReview
 }
