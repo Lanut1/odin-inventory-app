@@ -24,13 +24,15 @@
           <a href="/products">Go Back</a>
         </button>
   
-        <button>
-          <a href="/forms/<%= product.id %>">Update</a>
-        </button>
-  
-        <button class="button--delete" onclick="confirmDelete()">
-          Delete
-        </button>
+        <% if (user && user.status === "admin") { %>
+          <button>
+            <a href="/forms/<%= product.id %>">Update</a>
+          </button>
+    
+          <button class="button--delete" onclick="confirmDelete()">
+            Delete
+          </button>
+        <% } %>
       </div>
     </div>
 
@@ -46,36 +48,7 @@
       </div>
     </div>
 
-    <% if (errors) { %>
-      <% errors.forEach(error => { %>
-        <div><%= error.msg %></div>
-      <% })%>
-    <% } %>
-
-    <% if (user) { %>
-      <form action="/products/<%= product.id %>/review" method="POST">
-        <label for="product-card__textarea">Leave a Review</label>
-        <textarea name="review" id="product-card__textarea" rows="5" maxlength="1000"></textarea>
-        <button type="submit">Comment</button>
-      </form>
-    <% } %>
-
-    <% if (reviews && reviews.length > 0) { %>
-      <% reviews.forEach(review => { %>
-        <div class="product-card__review-item">
-          <div class="product-card__review-message"><%= review.message %></div>
-          <div class="product-card__review-user">
-            <% if (user) { %>
-              <%= review.username || "Deleted User" %>
-            <% } %>
-          </div>
-          <div class="product-card__review-time"><%= review.time %></div>
-        </div>
-      <% }) %>
-    <% } else { %>
-      <p>No reviews yet. Be the first to leave one!</p>
-    <% } %>
-
+    <%- include('partials/reviewsSection') %>
   </main>
 </body>
 </html>

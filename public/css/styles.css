@@ -10,10 +10,16 @@ a {
 }
 
 header {
-  background-color: #ebb582;
-  padding: 2rem;
-  box-shadow: 0 3px 5px gray;
+  padding: 1rem 3rem;
   color: black;
+  display: flex;
+  justify-content: space-between;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
 }
 
 .products-page__form {
@@ -43,24 +49,57 @@ input[type="password"] {
   gap: 0.5rem;
 }
 
-.index-page {
-  background-image: url("../images/background.jpg");
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: auto;
-  height: 100vh;
-  color: black;
-}
-
 .index-page__container {
-  background: radial-gradient(ellipse closest-side, rgba(255, 255, 255, 1) 30%, rgba(255, 255, 255, 0.7) 100%);
-  border-radius: 10px;
+  /* padding: 1rem 0; */
   display: flex;
   flex-direction: column;
+  gap: 4rem;
+}
+
+.index-page__landing {
+  padding: 2rem 3rem;
+}
+
+.index-page__landing-background {
+  background-image: url("../images/background.jpg");
+  border-radius: 16px;
+}
+
+.index-page__higlighted-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 3rem;
+  gap: 0.5rem;
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.index-page__highlighted-line {
+  clip-path: polygon(0% 10%, 100% 0%, 100% 90%, 0% 100%);
+}
+
+.index-page__highlighted-line--white {
+  background-color: white;
+}
+
+.index-page__brands {
+  padding: 1rem;
+  background-color: #ebb582;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 4rem;
-  gap: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.index-page__brand-image {
+  width: 15%;
+}
+
+.index-page__brand-image img {
+  width: 100%;
 }
 
 .products-page {
@@ -104,7 +143,7 @@ button {
   border: none;
   border-radius: 7px;
   font-weight: bold;
-  background-color: #785A46;
+  background-color: black;
   color: white;
   box-shadow: 0 0 5px gray;
   transition: ease 0.3s;
@@ -113,6 +152,10 @@ button {
 
 .button--delete {
   background-color: red;
+}
+
+.button--auth {
+  background-color: black;
 }
 
 button:hover {

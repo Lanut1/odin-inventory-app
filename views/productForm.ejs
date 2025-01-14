@@ -16,12 +16,7 @@
   <main class="product-form__container">
     <h2 class="product-form__header"><%= product ? 'Update product' : 'Add New Product' %></h2>
 
-    <form action="/products<%= product ? '/' + product.id + '?_method=PUT' : '' %>" method="POST" class="product-form">
-      <label class="product-form__label--text">
-        <b>Please Enter Admin Password:</b>
-        <input type="password" name="password" required>
-      </label>
-      
+    <form action="/products<%= product ? '/' + product.id + '?_method=PUT' : '' %>" method="POST" class="product-form">      
       <% if (product) { %>
         <input type="hidden" name="_method" value="PUT">
       <% }%>

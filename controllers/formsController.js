@@ -3,6 +3,8 @@ require('dotenv').config();
 
 async function productFormGet(req, res, next) {
   try {
+    if (!req.isAuthenticated() || req.user.status !== "admin") throw new Error("Please log in as admin user");
+    
     const [brands, categories, skintypes] = await Promise.all([
       db.getAllBrands(),
       db.getAllCategories(),

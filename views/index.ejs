@@ -10,13 +10,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
 </head>
 <body>
-  <main class="index-page">
-    <div class="index-page__container">
-      <h1>Welcome to PROCosmetics App!</h1>
-      <button>
-        <a href="/products">VIEW PRODUCTS</a>
-      </button>
+  <%- include('partials/header') %>
+
+  <main class="index-page__container">
+    <div class="index-page__landing">
+      <div class="index-page__landing-background">
+        <div class="index-page__higlighted-text">
+          <div class="index-page__highlighted-line index-page__highlighted-line--white">LET'S</div>
+          <div class="index-page__highlighted-line">EXPLORE</div>
+          <div class="index-page__highlighted-line index-page__highlighted-line--white">UNIQUE</div>
+          <div class="index-page__highlighted-line">COSMETICS.</div>
+          <button>
+            <a href="/products">VIEW PRODUCTS</a>
+          </button>
+        </div>
+      </div>
     </div>
+
+
+    <div class="index-page__brands">
+      <div class="index-page__brand-image">
+        <img src="/images/bioderma.svg" alt="Bioderma brand">
+      </div>
+      <div class="index-page__brand-image">
+        <img src="/images/larocheposay.svg" alt="La Roche Posay brand">
+      </div>
+      <div class="index-page__brand-image">
+        <img src="/images/avene.svg" alt="Avene brand">
+      </div>
+      <div class="index-page__brand-image">
+        <img src="/images/cerave.svg" alt="Cerave brand">
+      </div>
+      <div class="index-page__brand-image">
+        <img src="/images/eucirine.svg" alt="Eucirine brand">
+      </div>
+
+    </div>
+
   </main>
 </body>
 </html>
