@@ -15,11 +15,7 @@ async function productCardGet(req, res, next) {
       db.getProductReviews(productID)
     ]);
 
-    // const product = await db.getProductByID(productID);
-    // const reviews = await db.getProductReviews(productID);
-
     if (req.isAuthenticated()){
-      console.log("Logged in!")
       user = req.user;
     }
 
@@ -36,9 +32,7 @@ async function productCardGet(req, res, next) {
 
 async function productCardDelete(req, res, next) {
   try {
-    const { password } = req.body;
-
-    if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
+    if (!req.isAuthenticated() || req.user.status !== "admin") throw new Error("Please log in as admin user");
 
     const productID = parseInt(req.params.id);
 
@@ -55,8 +49,6 @@ async function productsGet(req, res, next) {
   try {
     const { brand, category, skintype } = req.query;
 
-    let user = null;
-
     const filterBrands = getFilters(brand);
     const filterCategories = getFilters(category);
     const filterSkintypes = getFilters(skintype);
@@ -68,8 +60,9 @@ async function productsGet(req, res, next) {
       db.getProducts(filterBrands, filterCategories, filterSkintypes)
     ]);
 
+    let user = null;
+
     if (req.isAuthenticated()){
-      console.log("Logged in!")
       user = req.user;
     }
 
@@ -93,8 +86,9 @@ async function productsGet(req, res, next) {
 
 async function productsPost(req, res, next) {
   try {
-    const { 
-      password,
+    if (!req.isAuthenticated() || req.user.status !== "admin" ) throw new Error("Please log in as admin user");
+
+    const {
       name,
       description,
       photo_url,
@@ -105,14 +99,6 @@ async function productsPost(req, res, next) {
       newCategoryText, 
       newSkintypeText
     } = req.body;
-
-    if (password !== process.env.ADMIN_PASSWORD) throw new Error("Please enter valid admin password!");
-
-    let user = null;
-
-    if (req.isAuthenticated()) {
-      user = req.user;
-    }
 
     const errors = validationResult(req);
     
@@ -129,7 +115,7 @@ async function productsPost(req, res, next) {
         skintypes,
         product: req.body,
         errors: errors.array(),
-        user
+        user: req.user
       })
     }
 
@@ -175,7 +161,6 @@ async function productReviewPost(req, res, next) {
         db.getProductReviews(productID)
       ]);
 
-      console.log(errors);
       return res.status(500).render("productCard", {
         product,
         user,

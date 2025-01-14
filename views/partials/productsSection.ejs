@@ -1,9 +1,11 @@
 <div class="products-page__products-container">
   <div class="products-page__products-header">
     <h2>All Products</h2>
-    <button>
-      <a href="/forms/new-product">Add New Product</a>
-    </button> 
+    <% if (user && user.status === "admin") { %>
+      <button>
+        <a href="/forms/new-product">Add New Product</a>
+      </button>
+    <% } %>
   </div>
 
   <% if (products.length === 0) { %>
