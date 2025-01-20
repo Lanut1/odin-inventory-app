@@ -1,14 +1,20 @@
 const db = require("../db/queries");
 require('dotenv').config();
 
-function indexPageGet(req, res) {
-  let user = null;
-
-  if (req.isAuthenticated()) {
-    user = req.user;
+async function indexPageGet(req, res, next) {
+  try {
+    let user = null;
+ 
+    if (req.isAuthenticated()) {
+      user = req.user;
+    }
+  
+    const favouriteProducts = await db.getFavouriteProducts();
+  
+    res.render("index", {user, favouriteProducts});
+  } catch (error) {
+    next(error);
   }
-
-  res.render("index", {user});
 }
 
 module.exports = {

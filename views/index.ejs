@@ -8,45 +8,28 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_forward,check" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
   <%- include('partials/header') %>
 
   <main class="index-page__container">
-    <div class="index-page__landing">
-      <div class="index-page__landing-background">
-        <div class="index-page__higlighted-text">
-          <div class="index-page__highlighted-line index-page__highlighted-line--white">LET'S</div>
-          <div class="index-page__highlighted-line">EXPLORE</div>
-          <div class="index-page__highlighted-line index-page__highlighted-line--white">UNIQUE</div>
-          <div class="index-page__highlighted-line">COSMETICS.</div>
-          <button>
-            <a href="/products">VIEW PRODUCTS</a>
-          </button>
-        </div>
-      </div>
-    </div>
+    <%- include('partials/landingView') %>
 
+    <%- include('partials/brandsIndexPage') %>
 
-    <div class="index-page__brands">
-      <div class="index-page__brand-image">
-        <img src="/images/bioderma.svg" alt="Bioderma brand">
-      </div>
-      <div class="index-page__brand-image">
-        <img src="/images/larocheposay.svg" alt="La Roche Posay brand">
-      </div>
-      <div class="index-page__brand-image">
-        <img src="/images/avene.svg" alt="Avene brand">
-      </div>
-      <div class="index-page__brand-image">
-        <img src="/images/cerave.svg" alt="Cerave brand">
-      </div>
-      <div class="index-page__brand-image">
-        <img src="/images/eucirine.svg" alt="Eucirine brand">
-      </div>
+    <%- include('partials/reviewsIndexPage') %>
 
-    </div>
+    <%- include('partials/promotionIndexPage') %>
+
+    <%- include('partials/favouritesIndexPage') %>
+
+    <%- include('partials/signupIndexPage') %>
 
   </main>
+
+  <%- include('partials/footer') %>
+
 </body>
 </html>
