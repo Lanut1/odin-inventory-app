@@ -253,6 +253,12 @@ async function addProductReview(review) {
   if (result.rowCount === 0) throw new Error("Failed to add product review");
 }
 
+async function getFavouriteProducts() {
+  const result = await pool.query("SELECT id, name, photo_url FROM products LIMIT 4;")
+
+  return result.rows;
+}
+
 module.exports = {
   getProductByID,
   addNewProduct,
@@ -274,5 +280,6 @@ module.exports = {
   getUserInfoByUsername,
   getUserInfoByID,
   getProductReviews,
-  addProductReview
+  addProductReview,
+  getFavouriteProducts
 }

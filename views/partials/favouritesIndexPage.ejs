@@ -1,0 +1,27 @@
+<div class="index-page__favourites">
+  <% if (favouriteProducts && favouriteProducts.length > 0) { %>
+    <div class="index-page__favourites-header">
+      <h1>FAVOURITE PRODUCTS</h1>
+    </div>
+
+    <ul class="products-list">
+        <% favouriteProducts.forEach(product => { %>
+          <li class="product-item">
+            <div class="product-item__name">
+              <h3><%= product.name %></h3>
+            </div>
+            <img src="<%= product.photo_url %>" alt="<%= product.name %>" />
+            <a class="product-item__link link-animated" href="/products/<%= product.id %>">
+              <h3>View Product</h3>
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </a>
+          </li>
+        <% }) %>
+      </ul>
+    <% } else { %>
+      <h1>EXPLORE THE BEST PRODUCTS</h1>
+      <button>
+        <a href="/products">VIEW PRODUCTS</a>
+      </button>
+    <% } %>
+</div>

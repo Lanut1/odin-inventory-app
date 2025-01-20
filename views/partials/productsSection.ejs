@@ -11,22 +11,21 @@
   <% if (products.length === 0) { %>
     <h3>No products found matching your filters.</h3>
   <% } else { %>
-    <ul class="products-page__products-list">
+    <ul class="products-list"> 
       <% products.forEach(product => { %>
-        <li class="products-page__product-item">
-          <div class="products-page__product-name">
+        <li class="product-item">
+          <div class="product-item__name">
             <h3><%= product.name %></h3>
           </div>
           <img src="<%= product.photo_url %>" alt="<%= product.name %>" />
-          <button>
-            <a href="/products/<%= product.id %>">View Product</a>
-          </button>
+          <a class="product-item__link link-animated" href="/products/<%= product.id %>">
+            <p>View Product</p>
+            <span class="material-symbols-outlined">
+              arrow_forward
+            </span>
+          </a>
         </li>
       <% }) %>
     </ul>
   <% } %>
-
-  <button>
-    <a href="/">Go Back</a>
-  </button>
 </div>
