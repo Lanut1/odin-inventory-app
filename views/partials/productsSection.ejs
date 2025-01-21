@@ -1,6 +1,5 @@
 <div class="products-page__products-container">
   <div class="products-page__products-header">
-    <h2>All Products</h2>
     <% if (user && user.status === "admin") { %>
       <button>
         <a href="/forms/new-product">Add New Product</a>
@@ -18,7 +17,7 @@
             <h3><%= product.name %></h3>
           </div>
           <img src="<%= product.photo_url %>" alt="<%= product.name %>" />
-          <a class="product-item__link link-animated" href="/products/<%= product.id %>">
+          <a class="link-animated" href="/products/<%= product.id %>">
             <p>View Product</p>
             <span class="material-symbols-outlined">
               arrow_forward

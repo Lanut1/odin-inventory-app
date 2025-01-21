@@ -14,10 +14,18 @@
 <body>
   <%- include('partials/header') %>
 
-  <main class="products-page">
-    <%- include('partials/filterSection') %>
+  <main>
+    <div class="background-frame background-frame--gradient">
+      <h2>All Products</h2>
+    </div>
+    
+    <div class="products-page">
+      <%- include('partials/filterSection') %>
 
-    <%- include('partials/productsSection') %>
+      <%- include('partials/productsSection') %>
+    </div>
+    
+
   </main>
 
   <%- include('partials/footer') %>
