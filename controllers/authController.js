@@ -5,6 +5,8 @@ const bcrypt = require("bcryptjs");
 const passport = require("../middleware/passportConfig");
 
 function registerPageGet(req, res) {
+  if (req.isAuthenticated()) throw new Error("PLease log out from your current account!");
+
   res.render("registrationPage", {
     username: null,
     email: null,
@@ -23,7 +25,8 @@ async function registerPagePost(req, res, next) {
       return res.status(400).render("registrationPage", {
         username,
         email,
-        errors: errors.array()
+        errors: errors.mapped(),
+        user: null
       })
     }
 
@@ -45,8 +48,11 @@ async function registerPagePost(req, res, next) {
 }
 
 function loginPageGet(req, res) {
+  if (req.isAuthenticated()) throw new Error("PLease log out from your current account!");
+
   res.render("loginPage", {
     username: null,
+    authError: null,
     errors: null,
     user: null
   });
@@ -58,7 +64,8 @@ async function loginPagePost(req, res, next) {
 
     if (!errors.isEmpty()) {
       return res.status(400).render("loginPage", {
-        errors: errors.array(),
+        authError: null,
+        errors: errors.mapped(),
         username: req.body.username,
         user: null
       });
@@ -67,9 +74,11 @@ async function loginPagePost(req, res, next) {
       if (err) {
         return next(err);
       }
+
       if (!user) {
         return res.status(401).render("loginPage", {
-          errors: [{ msg: info.message }],
+          authError: {msg: info.message},
+          errors: null,
           username: req.body.username,
           user: null
         });
@@ -95,7 +104,6 @@ async function logoutGet(req, res, next) {
         return next(err);
       }
 
-      console.log("Logged out!")
       res.redirect("/");
     });
   } catch (error) {

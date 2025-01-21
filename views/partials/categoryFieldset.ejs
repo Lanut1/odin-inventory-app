@@ -1,10 +1,10 @@
 <fieldset>
   <legend>Select category:</legend>
 
-  <div class="product-form__fieldset--first">
+  <div class="form__fieldset--first">
     <% if (categories.length > 0) { %>
       <% categories.forEach(category => { %>
-        <label class="product-form__label--radio">
+        <label class="form__label--radio">
           <input type="radio" name="category_name" value="<%= category.name %>" onclick="toggleCategoryInput()" <%= product && product.category_name === category.name ? 'checked' : '' %> required>
           <%= category.name %>
         </label>
@@ -12,8 +12,8 @@
     <% } %>
   </div>
 
-  <div class="product-form__fieldset--second">
-    <label class="product-form__label--radio">
+  <div class="form__fieldset--second">
+    <label class="form__label--radio">
       <input type="radio" name="category_name" value="new_category" <%= product && product.category_name === "new_category" ? 'checked' : '' %> onclick="toggleCategoryInput()">
       Add New
     </label>

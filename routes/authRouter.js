@@ -4,8 +4,8 @@ const router = Router();
 const registrationValidator = require("../middleware/registrationValidator");
 const loginValidator = require("../middleware/loginValidator");
 
-router.get("/register", controller.registerPageGet);
-router.post("/register", registrationValidator, controller.registerPagePost);
+router.get("/registration", controller.registerPageGet);
+router.post("/registration", registrationValidator, controller.registerPagePost);
 router.get("/login", controller.loginPageGet);
 router.post("/login", loginValidator, controller.loginPagePost);
 router.get("/log-out", controller.logoutGet);
