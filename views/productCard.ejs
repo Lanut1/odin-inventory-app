@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=arrow_forward,check" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script defer src="/js/productCard.js"></script>
 </head>
 <body>
@@ -15,40 +17,49 @@
   
   <%- include('partials/header')%>
 
-  <main class="product-card__container">
-    <div class="product-card__header">
-      <h1><%= product.name %></h1>
-
-      <div class="product-card__buttons">
-        <button>
-          <a href="/products">Go Back</a>
-        </button>
-  
-        <% if (user && user.status === "admin") { %>
-          <button>
-            <a href="/forms/<%= product.id %>">Update</a>
-          </button>
-    
-          <button class="button--delete" onclick="confirmDelete()">
-            Delete
-          </button>
-        <% } %>
-      </div>
+  <main>
+    <div class="background-frame background-frame--gradient">
+      <h2>Product Details</h2>
     </div>
 
-    <div class="product-card__main">
-      <div class="product-card__image-container">
-        <img src="<%= product.photo_url %>" alt="<%= product.name %>" />  
-      </div>
-      <div class="product-card__info">
-        <p><b>Brand:</b> <%= product.brand_name %></p>
-        <p><b>Description:</b> <%= product.description %></p>
-        <p><b>Category:</b> <%= product.category_name %></p>
-        <p><b>Skin Type:</b> <%= product.skintype_name %></p>
-      </div>
-    </div>
+    <div class="product-card__container">
+      <div class="product-card__main">
+        <div class="product-card__image-container">
+          <img src="<%= product.photo_url %>" alt="<%= product.name %>" />  
+        </div>
+        <div class="product-card__info">
+          <h3><%= product.name %></h3>
+          <p><b>Brand:</b> <%= product.brand_name %></p>
+          <p><b>Description:</b> <%= product.description %></p>
+          <p><b>Category:</b> <%= product.category_name %></p>
+          <p><b>Skin Type:</b> <%= product.skintype_name %></p>
+          <div class="product-card__buttons">
 
-    <%- include('partials/reviewsSection') %>
+            <% if (user && user.status === "admin") { %>
+              <button onclick="location.href='/forms/<%= product.id %>'">
+                Update
+              </button>
+        
+              <button class="button--delete" onclick="confirmDelete()">
+                Delete
+              </button>
+            <% } %>
+
+            <a class="link-animated" href="/products">
+              <h4>Back to Catalogue</h4>
+              <span class="material-symbols-outlined">
+                arrow_forward
+              </span>
+            </a>
+      
+
+          </div>
+        </div>
+      </div>
+
+      <%- include('partials/reviewsSection') %>
+    </div>
   </main>
+  <%- include('partials/footer') %>
 </body>
 </html>

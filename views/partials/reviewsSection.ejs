@@ -4,26 +4,38 @@
   <% })%>
 <% } %>
 
-<% if (user) { %>
-  <form action="/products/<%= product.id %>/review" method="POST">
-    <label for="product-card__textarea">Leave a Review</label>
-    <textarea name="review" id="product-card__textarea" rows="5" maxlength="1000"></textarea>
-    <button type="submit">Comment</button>
-  </form>
-<% } %>
+<div class="product-card__reviews">
 
-<% if (reviews && reviews.length > 0) { %>
-  <% reviews.forEach(review => { %>
-    <div class="product-card__review-item">
-      <div class="product-card__review-message"><%= review.message %></div>
-      <div class="product-card__review-user">
-        <% if (user) { %>
-          <%= review.username || "Deleted User" %>
-        <% } %>
-      </div>
-      <div class="product-card__review-time"><%= review.time %></div>
-    </div>
-  <% }) %>
-<% } else { %>
-  <p>No reviews yet. Be the first to leave one!</p>
-<% } %>
+  <div class="product-card__review-items">
+    <% if (reviews && reviews.length > 0) { %>
+      <% reviews.forEach(review => { %>
+        <div class="product-card__review-item">
+          <div class="product-card__review-first">
+            <div class="product-card__review-user">
+              <div class="product-card__review-usericon"><img src="/images/user.png" alt=""></div>
+              <div class="product-card__review-username">
+                <% if (user) { %>
+                  <%= review.username || "Deleted User" %>
+                <% } %>
+              </div>
+            </div>
+            <div class="product-card__review-time"><%= review.time %></div>
+          </div>
+
+
+          <div class="product-card__review-message"><%= review.message %></div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <h4>No reviews yet. Be the first to leave one!</h4>
+    <% } %>
+  </div>
+
+  <% if (user) { %>
+    <form class="product-card__textarea" action="/products/<%= product.id %>/review" method="POST">
+      <textarea name="review" id="review-textarea" rows="5" maxlength="1000" placeholder="Leave a review..."></textarea>
+      <button type="submit">Comment</button>
+    </form>
+  <% } %>
+  
+</div>

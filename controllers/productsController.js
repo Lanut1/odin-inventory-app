@@ -114,7 +114,7 @@ async function productsPost(req, res, next) {
         categories,
         skintypes,
         product: req.body,
-        errors: errors.array(),
+        errors: errors.mapped(),
         user: req.user
       })
     }

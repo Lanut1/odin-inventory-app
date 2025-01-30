@@ -10,12 +10,12 @@
     <a href="/">CONTACTS</a>
 
     <% if (user) { %>
-      <button class="button--auth">
-        <a href="/auth/log-out">LOG OUT</a>
+      <button class="button--auth" onclick="location.href='/auth/log-out'">
+        LOG OUT
       </button>
     <% } else { %>
-      <a href="/auth/login">LOG IN</a>
-      <button class="button--auth"><a href="/auth/registration">SIGN UP</a></button>
+      <a href="/auth/login" >LOG IN</a>
+      <button class="button--auth" onclick="location.href='/auth/registration'">SIGN UP</button>
     <% } %>
   </nav>
 </header>
