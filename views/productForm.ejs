@@ -24,25 +24,28 @@
           <input type="hidden" name="_method" value="PUT">
         <% }%>
 
-        <% if (errors) { %>
-          <% errors.forEach(error => { %>
-            <div><%= error.msg %></div>
-          <% })%>
-        <% } %>
-
         <label class="form__label--text">
           <b>Product Name:</b>
-          <input type="text" name="name" id="name" value="<%= product ? product.name : '' %>" maxlength="255" required>
+          <input type="text" name="name" id="name" value="<%= product ? product.name : '' %>" class="<%= errors && errors.name ? 'input--error' : '' %>" maxlength="255" required>
+          <% if (errors && errors.name) { %>
+            <div class="error-message"><%= errors.name.msg %></div>
+          <% } %>
         </label>
 
         <label class="form__label--text">
           <b>Product Description:</b>
-          <input type="text" name="description" value="<%= product ? product.description : '' %>" required>
+          <input type="text" name="description" value="<%= product ? product.description : '' %>" class="<%= errors && errors.description ? 'input--error' : '' %>" required>
+          <% if (errors && errors.description) { %>
+            <div class="error-message"><%= errors.description.msg %></div>
+          <% } %>
         </label>
 
         <label class="form__label--text">
           <b>Product Photo:</b>
-          <input type="text" name="photo_url" value="<%= product ? product.photo_url : '' %>" required>
+          <input type="text" name="photo_url" value="<%= product ? product.photo_url : '' %>" class="<%= errors && errors.photo_url ? 'input--error' : '' %>" required>
+          <% if (errors && errors.photo_url) { %>
+            <div class="error-message"><%= errors.photo_url.msg %></div>
+          <% } %>
         </label>
 
         <%- include('partials/brandFieldset')%>
@@ -55,8 +58,8 @@
           <button type="submit">
             <%= product ? 'Update product' : 'Add Product' %>
           </button>
-          <button type="button">
-            <a href="/products">Go Back</a>
+          <button type="button" onclick="location.href='/products'">
+            Go Back
           </button>
         </div>
 

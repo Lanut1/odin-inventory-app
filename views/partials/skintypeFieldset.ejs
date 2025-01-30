@@ -2,6 +2,10 @@
   <legend>Select skintype:</legend>
 
   <div class="form__fieldset--first">
+    <% if (errors && errors.skintype_name) { %>
+      <div class="error-message"><%= errors.skintype_name.msg %></div>
+    <% } %>
+
     <% if (skintypes.length > 0) { %>
       <% skintypes.forEach(skintype => { %>
         <label class="form__label--radio">
@@ -19,7 +23,7 @@
     </label>
 
     <label>
-      <input type="text" id="newSkintypeText" name="newSkintypeText" <%= product && product.skintype_name === "new_skintype" ? '' : 'disabled' %> required>
+      <input type="text" id="newSkintypeText" name="newSkintypeText" value="<%= product && product.newSkintypeText ? product.newSkintypeText : '' %>" class="<%= errors && errors.newSkintypeText ? 'input--error' : '' %>" <%= product && product.skintype_name === "new_skintype" ? '' : 'disabled' %> required>
     </label>
   </div>
 

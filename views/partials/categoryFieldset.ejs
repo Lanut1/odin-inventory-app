@@ -2,6 +2,10 @@
   <legend>Select category:</legend>
 
   <div class="form__fieldset--first">
+    <% if (errors && errors.category_name) { %>
+      <div class="error-message"><%= errors.category_name.msg %></div>
+    <% } %>
+
     <% if (categories.length > 0) { %>
       <% categories.forEach(category => { %>
         <label class="form__label--radio">
@@ -19,7 +23,7 @@
     </label>
 
     <label>
-      <input type="text" id="newCategoryText" name="newCategoryText" <%= product && product.category_name === "new_category" ? '' : 'disabled' %> required>
+      <input type="text" id="newCategoryText" name="newCategoryText" value="<%= product && product.newCategoryText ? product.newCategoryText : '' %>" class="<%= errors && errors.newCategoryText ? 'input--error' : '' %>" <%= product && product.category_name === "new_category" ? '' : 'disabled' %> required>
     </label>
   </div>
 

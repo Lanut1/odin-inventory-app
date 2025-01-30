@@ -365,46 +365,71 @@ dialog {
 
 .product-card__container {
   padding: 3rem;
-  width: 90vw;
-  margin: auto;
   display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.product-card__header {
-  display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: flex-start;
 }
 
 .product-card__buttons {
   display: flex;
   gap: 1rem;
+  align-self: flex-end;
+  align-items: center;
 }
 
 .product-card__main {
   padding: 3rem;
   display: flex;
-  gap: 2rem;
+  justify-content: space-between;
   background-color: whitesmoke;
   border-radius: 7px;
-  box-shadow: 0 0 5px gray;
+  width: 60%;
 }
 
 .product-card__image-container {
-  width: 40vw;
+  width: 30%;
 }
 
 .product-card__image-container img {
   max-width: 100%;
+  object-fit: contain;
 }
 
 .product-card__info {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: 50%;
+}
+
+.product-card__reviews {
+  padding: 0 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow: hidden;
+}
+
+.product-card__textarea-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.product-card__textarea button {
+  align-self: flex-end;
+}
+
+.product-card__textarea label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.product-card__textarea textarea {
+  padding: 1rem;
+  border-radius: 7px;
 }
 
 .form__container {
@@ -432,7 +457,6 @@ dialog {
   background-color: whitesmoke;
   padding: 3rem 5rem;
   border-radius: 7px;
-  box-shadow: 0 0 5px gray;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -520,4 +544,10 @@ legend {
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+}
+
+.product-card__textarea {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }

@@ -1,8 +1,8 @@
 <div class="products-page__products-container">
   <div class="products-page__products-header">
     <% if (user && user.status === "admin") { %>
-      <button>
-        <a href="/forms/new-product">Add New Product</a>
+      <button onclick="location.href='/forms/new-product'">
+        Add New Product
       </button>
     <% } %>
   </div>

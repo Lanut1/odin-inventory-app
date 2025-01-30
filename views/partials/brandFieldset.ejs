@@ -2,6 +2,10 @@
   <legend>Select brand:</legend>
 
   <div class="form__fieldset--first">
+    <% if (errors && errors.brand_name) { %>
+      <div class="error-message"><%= errors.brand_name.msg %></div>
+    <% } %>
+    
     <% if (brands.length > 0) { %>
       <% brands.forEach(brand => { %>
         <label class="form__label--radio">
@@ -19,7 +23,7 @@
     </label>
 
     <label>
-      <input type="text" id="newBrandText" name="newBrandText" value="<%= product && product.newBrandText ? product.newBrandText : '' %>" <%= product && product.brand_name === "new_brand" ? '' : 'disabled' %> required>
+      <input type="text" id="newBrandText" name="newBrandText" value="<%= product && product.newBrandText ? product.newBrandText : '' %>" class="<%= errors && errors.newBrandText ? 'input--error' : '' %>" <%= product && product.brand_name === "new_brand" ? '' : 'disabled' %> required>
     </label>
   </div>
 
