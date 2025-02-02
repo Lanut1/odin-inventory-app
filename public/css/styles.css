@@ -304,6 +304,13 @@ button {
   background-color: black;
 }
 
+.button--icon {
+  background-color: transparent;
+  border: none;
+  padding: 0.3rem;
+  color: black;
+}
+
 button:hover {
   scale: 1.05;
 }
@@ -323,8 +330,9 @@ button:hover {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  background-color: whitesmoke;
+  background-color: #f9f9f9;
   border-radius: 7px;
+  box-shadow: 0 2px 7px rgb(165, 165, 165);
 }
 
 .product-item__name {
@@ -352,7 +360,7 @@ li {
 dialog {
   border: none;
   border-radius: 7px;
-  box-shadow: 0 0 7px gray;
+  box-shadow: 0 0 7px rgb(165, 165, 165);
   margin: auto;
   padding: 2rem;
 }
@@ -361,29 +369,13 @@ dialog {
   display: flex;
   width: 100%;
   justify-content: space-between;
-}
-
-.product-card__container {
-  padding: 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  margin-top: 2rem;
 }
 
 .product-card__buttons {
   display: flex;
   gap: 1rem;
-  align-self: flex-end;
   align-items: center;
-}
-
-.product-card__main {
-  padding: 3rem;
-  display: flex;
-  justify-content: space-between;
-  background-color: whitesmoke;
-  border-radius: 7px;
-  width: 60%;
 }
 
 .product-card__image-container {
@@ -411,6 +403,14 @@ dialog {
   overflow: hidden;
 }
 
+.product-card__review-usericon {
+  width: 2.5rem;
+}
+
+.product-card__review-usericon img {
+  width: 100%;
+}
+
 .product-card__textarea-label {
   display: flex;
   justify-content: space-between;
@@ -425,11 +425,6 @@ dialog {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-}
-
-.product-card__textarea textarea {
-  padding: 1rem;
-  border-radius: 7px;
 }
 
 .form__container {
@@ -454,12 +449,13 @@ dialog {
 }
 
 .form {
-  background-color: whitesmoke;
+  background-color: #f9f9f9;
   padding: 3rem 5rem;
   border-radius: 7px;
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  box-shadow: 0 0 5px rgb(165, 165, 165);
 }
 
 .form__label--text {
@@ -546,8 +542,170 @@ legend {
   padding: 1rem;
 }
 
+.product-card__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+.product-card__main {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 900px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0px 4px 10px rgb(165, 165, 165);
+}
+
+.product-card__image-container img {
+  width: 200px;
+  height: auto;
+  border-radius: 8px;
+}
+
+.product-card__info h3 {
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.product-card__info p {
+  font-size: 1rem;
+  color: #333;
+}
+
+.product-card__reviews {
+  width: 100%;
+  max-width: 900px;
+  margin-top: 2rem;
+}
+
+.product-card__login-message {
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.product-card__review-items {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.product-card__review-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0.7rem;
+}
+
+.product-card__review-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.product-card__review-user {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.product-card__review-time {
+  font-size: 0.9rem;
+  color: gray;
+}
+
+.product-card__review-message {
+  font-size: 1rem;
+  color: #333;
+}
+
 .product-card__textarea {
   display: flex;
   flex-direction: column;
+  gap: 0.7rem;
+}
+
+.review-textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.textarea--error {
+  border: 2px solid red;
+}
+
+.contacts-page {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.contacts-page__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 1rem;
+  margin: auto;
+}
+
+.contacts-page__header h3 {
+  font-size: 2rem;
+}
+
+.contacts-page__container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+}
+
+.contacts-page__info-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contacts-page__info-item {
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+  font-size: 1.2rem;
+}
+
+.contacts-page__form {
+  width: 25%;
+}
+
+.contacts-page__form textarea {
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  border: 2px solid black;
+}
+
+.contacts-page__form form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.contacts-page__form button {
+  align-self: flex-start;
 }

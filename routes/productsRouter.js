@@ -9,6 +9,7 @@ router.post("/", productValidator, controller.productsPost);
 router.get("/:id", controller.productCardGet);
 router.delete("/:id", controller.productCardDelete);
 router.put("/:id", productValidator, controller.productsPost);
-router.post("/:id/review", reviewValidator, controller.productReviewPost);
+router.post("/:id/reviews", reviewValidator, controller.productReviewPost);
+router.delete("/:productID/reviews/:reviewID", controller.productReviewDelete);
 
 module.exports = router; 

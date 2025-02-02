@@ -231,7 +231,7 @@ async function getUserInfoByID(id) {
 
 async function getProductReviews(id) {
   const result = await pool.query(`
-    SELECT r.message, r.time, u.username
+    SELECT r.id, r.message, TO_CHAR(r.time, 'HH24:MI DD/MM/YYYY') as formatted_time, u.username
     FROM reviews r
     JOIN users u ON r.user_id = u.id
     WHERE r.product_id = $1;
@@ -248,13 +248,19 @@ async function addProductReview(review) {
       review.message,
       review.userID,
       review.productID
-  ])
+  ]);
 
   if (result.rowCount === 0) throw new Error("Failed to add product review");
 }
 
+async function deleteProductReview(id) {
+  const result = await pool.query("DELETE FROM reviews WHERE id = $1", [id]);
+
+  if (result.rowCount === 0) throw new Error(`Failed to delete review with ID ${id}`);
+}
+
 async function getFavouriteProducts() {
-  const result = await pool.query("SELECT id, name, photo_url FROM products LIMIT 4;")
+  const result = await pool.query("SELECT id, name, photo_url FROM products LIMIT 4;");
 
   return result.rows;
 }
@@ -281,5 +287,6 @@ module.exports = {
   getUserInfoByID,
   getProductReviews,
   addProductReview,
+  deleteProductReview,
   getFavouriteProducts
 }

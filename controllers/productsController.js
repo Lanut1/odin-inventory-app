@@ -183,10 +183,26 @@ async function productReviewPost(req, res, next) {
   }
 }
 
+async function productReviewDelete(req, res, next) {
+  try {
+    if (!req.isAuthenticated() || req.user.status !== "admin") throw new Error("Please log in as admin user");
+    const { productID, reviewID } = req.params;
+
+    if (isNaN(productID) || isNaN(reviewID)) throw new Error('Invalid product or review ID');
+
+    await db.deleteProductReview(reviewID);
+
+    res.redirect(`/products/${productID}`);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   productsGet,
   productsPost,
   productCardGet,
   productCardDelete,
-  productReviewPost
+  productReviewPost,
+  productReviewDelete
 }
