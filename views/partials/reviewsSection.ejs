@@ -1,29 +1,43 @@
-<% if (errors) { %>
-  <% errors.forEach(error => { %>
-    <div><%= error.msg %></div>
-  <% })%>
-<% } %>
-
 <div class="product-card__reviews">
+  
+  <% if (!user) { %>
+    <div class="product-card__login-message">
+      <p>Log in or sign up to see who left these reviews and share your own experience!</p>
+      <div>
+        <a href="/auth/login"><b>Log In</b></a> | <a href="/auth/registration"><b>Sign Up</b></a>
+      </div>
+    </div>
+  <% } %>
 
   <div class="product-card__review-items">
     <% if (reviews && reviews.length > 0) { %>
       <% reviews.forEach(review => { %>
         <div class="product-card__review-item">
-          <div class="product-card__review-first">
+          <div class="product-card__review-line">
             <div class="product-card__review-user">
               <div class="product-card__review-usericon"><img src="/images/user.png" alt=""></div>
               <div class="product-card__review-username">
                 <% if (user) { %>
-                  <%= review.username || "Deleted User" %>
+                  <%= review.username || "Deleted User" %> 
                 <% } %>
               </div>
             </div>
-            <div class="product-card__review-time"><%= review.time %></div>
+            <div class="product-card__review-time"><%= review.formatted_time %></div>
+          </div>
+          <div class="product-card__review-line">
+            <div class="product-card__review-message"><%= review.message %></div>
+            <% if (user && user.status === "admin") { %>
+              <form action="/products/<%= product.id %>/reviews/<%= review.id %>?_method=DELETE" method="POST">
+                <input type="hidden" name="_method" value="DELETE">
+                <button class="button--icon" type="submit">
+                  <span class="material-symbols-outlined">
+                    delete
+                  </span>
+                </button>
+              </form>
+            <% } %>
           </div>
 
-
-          <div class="product-card__review-message"><%= review.message %></div>
         </div>
       <% }) %>
     <% } else { %>
@@ -32,8 +46,20 @@
   </div>
 
   <% if (user) { %>
-    <form class="product-card__textarea" action="/products/<%= product.id %>/review" method="POST">
-      <textarea name="review" id="review-textarea" rows="5" maxlength="1000" placeholder="Leave a review..."></textarea>
+    <form class="product-card__textarea" action="/products/<%= product.id %>/reviews" method="POST">
+      <textarea
+        name="review"
+        rows="5"
+        maxlength="1000"
+        placeholder="Leave a review..."
+        class="review-textarea <%= errors ? 'textarea--error' : '' %>"
+        >
+      </textarea>
+      <% if (errors) { %>
+        <% errors.forEach(error => { %>
+          <div class="error-message"><%= error.msg %></div>
+        <% })%>
+      <% } %>
       <button type="submit">Comment</button>
     </form>
   <% } %>

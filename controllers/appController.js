@@ -17,6 +17,21 @@ async function indexPageGet(req, res, next) {
   }
 }
 
+async function contactsPageGet(req, res, next) {
+  try {
+    let user = null;
+ 
+    if (req.isAuthenticated()) {
+      user = req.user;
+    }
+
+    res.render("contactsPage", {user});
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
-  indexPageGet
+  indexPageGet,
+  contactsPageGet
 }
