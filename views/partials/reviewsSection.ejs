@@ -14,13 +14,13 @@
       <% reviews.forEach(review => { %>
         <div class="product-card__review-item">
           <div class="product-card__review-line">
-            <div class="product-card__review-user">
-              <div class="product-card__review-usericon"><img src="/images/user.png" alt=""></div>
-              <div class="product-card__review-username">
+            <div class="user-info">
+              <div class="user-avatar"><img src="/images/user.png" alt="User avatar"></div>
+              <span>
                 <% if (user) { %>
                   <%= review.username || "Deleted User" %> 
                 <% } %>
-              </div>
+              </span>
             </div>
             <div class="product-card__review-time"><%= review.formatted_time %></div>
           </div>

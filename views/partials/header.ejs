@@ -5,17 +5,33 @@
   </a>
 
   <nav>
-    <a href="/">ABOUT</a>
-    <a href="/products">CATALOGUE</a>
-    <a href="/contacts">CONTACTS</a>
-
-    <% if (user) { %>
-      <button class="button--auth" onclick="location.href='/auth/log-out'">
-        LOG OUT
+    <div class="header-menu">
+      <button class="menu-toggle button--icon" onclick="toggleMenu()">
+        <img src="/images/close.svg" alt="Close icon">
       </button>
-    <% } else { %>
-      <a href="/auth/login" >LOG IN</a>
-      <button class="button--auth" onclick="location.href='/auth/registration'">SIGN UP</button>
-    <% } %>
+
+      <a href="/">ABOUT</a>
+      <a href="/products">CATALOGUE</a>
+      <a href="/contacts">CONTACTS</a>
+
+      <% if (user) { %>
+        <div class="user-info">
+          <img class="user-avatar" src="/images/user.png" alt="User Avatar">
+          <span><%= user.username %></span>
+        </div>
+
+        <button class="button--auth" onclick="location.href='/auth/log-out'">
+          LOG OUT
+        </button>
+      <% } else { %>
+        <a href="/auth/login" >LOG IN</a>
+        <button class="button--auth" onclick="location.href='/auth/registration'">SIGN UP</button>
+      <% } %>
+    </div>
+
+    <button class="menu-toggle button--icon" onclick="toggleMenu()">
+      <img src="/images/menu.svg" alt="Menu icon">
+    </button>
+    <div class="header-overlay"></div>
   </nav>
 </header>
