@@ -1,0 +1,189 @@
+.index-page__container {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.index-page__landing {
+  padding: 2rem 3rem;
+}
+
+.index-page__landing-background {
+  background-image: url("../images/background.jpg");
+  border-radius: 16px;
+}
+
+.index-page__higlighted-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 3rem;
+  gap: 0.5rem;
+  font-size: 5rem;
+  font-weight: bold;
+}
+
+.index-page__highlighted-line {
+  clip-path: polygon(0% 10%, 100% 0%, 100% 90%, 0% 100%);
+}
+
+.index-page__highlighted-line--white {
+  background-color: white;
+}
+
+.index-page__brands {
+  padding: 0 1rem;
+  background-color: #ebb582;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.index-page__brand-image {
+  width: 15%;
+}
+
+.index-page__brand-image img {
+  width: 100%;
+}
+
+.index-page__reviews {
+  padding: 3rem;
+}
+
+.index-page__reviews-header {
+  padding-bottom: 2rem;
+}
+
+.index-page__reviews-categories {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.index-page__reviews-category {
+  width: 25%;
+}
+
+.index-page__reviews-image img {
+  width: 100%;
+  border-radius: 16px;
+}
+
+.index-page__promotion {
+  background-image: url("../images/promotionBackground.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 3rem;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.index-page__promotion-header {
+  font-size: 3.5rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start ;
+}
+
+.index-page__promotion-text {
+  font-size: 1.5rem;
+  width: 50%;
+  line-height: 1.6;
+}
+
+.index-page__favourites {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.index-page__sign-up {
+  background-color: #ebb582;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .index-page__container {
+    gap: 1.5rem;
+  }
+
+  .index-page__landing {
+    padding: 0.5rem 1rem;
+  }
+
+  .index-page__higlighted-text {
+    padding: 5rem 2rem;
+    gap: 1rem;
+    font-size: 2.5rem;
+  }
+
+  .index-page__brands {
+    justify-content: space-evenly;
+    padding: 0 0.5rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .index-page__brand-image {
+    width: 25%;
+  }
+
+  .index-page__reviews {
+    padding: 0.5rem 1rem;
+  }
+  
+  .index-page__reviews-header {
+    padding-bottom: 1rem;
+    text-align: center;
+  }
+
+  .index-page__reviews-categories {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .index-page__reviews-category {
+    width: 80%;
+    margin: auto;
+  }
+
+  .index-page__promotion {
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+  
+  .index-page__promotion-header {
+    font-size: 2rem;
+  }
+  
+  .index-page__promotion-text {
+    font-size: 1.2rem;
+    font-weight: 600;
+    width: 60%;
+    line-height: 1.6;
+  }
+
+  .index-page__favourites {
+    padding: 1rem;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+  .index-page__sign-up {
+    padding: 1.5rem;
+  }
+}

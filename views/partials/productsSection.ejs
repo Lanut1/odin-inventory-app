@@ -1,12 +1,4 @@
 <div class="products-page__products-container">
-  <div class="products-page__products-header">
-    <% if (user && user.status === "admin") { %>
-      <button onclick="location.href='/forms/new-product'">
-        Add New Product
-      </button>
-    <% } %>
-  </div>
-
   <% if (products.length === 0) { %>
     <h3>No products found matching your filters.</h3>
   <% } else { %>
